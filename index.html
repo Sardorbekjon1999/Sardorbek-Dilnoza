@@ -311,7 +311,7 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
         <label>Your entry</label>
         <textarea id="e-body" placeholder="Write about your day, a feeling, a memory you want to keep forever..."></textarea>
       </div>
-      <label>Photos</label>
+      <label>🎵 SONG OF THE DAY</label><input type="text" id="e-song" placeholder="What song describes this moment?" style="margin-bottom:10px" /><label>PHOTOS</label>
       <div class="photo-zone" onclick="document.getElementById('photo-input').click()">
         <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)" />
         <div class="photo-zone-text">📷 Tap to add photos</div>
@@ -410,8 +410,8 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 </div>
 
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+// localStorage helpers
+function lsGetEntries(){return JSON.parse(localStorage.getItem('diary_entries')||'[]').sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));}function lsAddEntry(e){const arr=lsGetEntries();e.id=Date.now().toString(36)+Math.random().toString(36).slice(2);arr.unshift(e);localStorage.setItem('diary_entries',JSON.stringify(arr));}function lsDeleteEntry(id){localStorage.setItem('diary_entries',JSON.stringify(lsGetEntries().filter(e=>e.id!==id)));}function lsGetMsgs(){return JSON.parse(localStorage.getItem('diary_chat')||'[]');}function lsSendMsg(m){const arr=lsGetMsgs();m.id=Date.now().toString(36)+Math.random().toString(36).slice(2);arr.push(m);localStorage.setItem('diary_chat',JSON.stringify(arr));}function lsUpdateMsgReactions(id,reacts){const arr=lsGetMsgs();const i=arr.findIndex(m=>m.id===id);if(i>=0){arr[i].reactions=reacts;localStorage.setItem('diary_chat',JSON.stringify(arr));}}function lsSetTyping(who,val){const t=JSON.parse(localStorage.getItem('diary_typing')||'{}');t[who]=val;localStorage.setItem('diary_typing',JSON.stringify(t));}
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
 const firebaseConfig = {
@@ -428,8 +428,8 @@ const firebaseConfig = {
 const DEFAULT_PASSWORD = 'Sardorbek&Dilnoza';
 // ──────────────────────────────────────────────────────────────────────────────
 
-const fbApp = initializeApp(firebaseConfig);
-const db = getFirestore(fbApp);
+// using localStorage - no Firebase needed
+// using localStorage - no db needed
 
 let currentWho = '';
 let entries = [];
@@ -592,11 +592,11 @@ window.saveEntry = async () => {
     const entry = {
       title: title||'Untitled', body, location: loc,
       mood: selectedMood, moodEmoji: selectedMoodEmoji,
-      tags: [...selectedTags], photos: photoURLs,
-      author: currentWho, createdAt: serverTimestamp()
+      song: document.getElementById('e-song').value.trim(), tags: [...selectedTags], photos: photoURLs,
+      author: currentWho, createdAt: new Date().toISOString()
     };
-    await addDoc(collection(db,'entries'), entry);
-    document.getElementById('e-title').value='';
+    lsAddEntry(entry);
+    document.getElementById('e-song').value=''; document.getElementById('e-title').value='';
     document.getElementById('e-body').value='';
     document.getElementById('e-loc').value='';
     document.querySelectorAll('.mood-pill').forEach(b=>b.classList.remove('sel'));
@@ -615,9 +615,9 @@ window.saveEntry = async () => {
 // ── ENTRIES ───────────────────────────────────────────────────────────────────
 async function loadEntries() {
   try {
-    const q = query(collection(db,'entries'), orderBy('createdAt','desc'));
-    const snap = await getDocs(q);
-    entries = snap.docs.map(d=>({id:d.id,...d.data()}));
+    // localStorage
+    // done
+    entries = lsGetEntries();
   } catch(e) { entries=[]; }
 }
 
@@ -671,7 +671,7 @@ window.openEntry = (id) => {
 window.deleteEntry = async (id) => {
   if(!confirm('Delete this entry? This cannot be undone.')) return;
   showLoader(true);
-  try{await deleteDoc(doc(db,'entries',id));entries=entries.filter(e=>e.id!==id);toast('Entry deleted.');switchTab('browse',document.querySelector('.tab:nth-child(2)'));renderEntries();}
+  try{lsDeleteEntry(id);entries=entries.filter(e=>e.id!==id);toast('Entry deleted.');switchTab('browse',document.querySelector('.tab:nth-child(2)'));renderEntries();}
   catch(e){toast('Error: '+e.message);}
   showLoader(false);
 };
@@ -767,7 +767,7 @@ window.sendMessage = async () => {
   if (!text) return;
   inp.value = ''; inp.style.height = '';
   clearTyping();
-  await addDoc(collection(db,'chat'), { text, photoUrl:null, author:currentWho, reactions:[], createdAt:serverTimestamp() });
+  lsSendMsg({text, photoUrl:null, author:currentWho, reactions:[], createdAt:new Date().toISOString()});
 };
 
 window.sendChatPhoto = async (input) => {
@@ -777,28 +777,28 @@ window.sendChatPhoto = async (input) => {
   try {
     let url;
     url = await uploadToImgbb(file);
-    await addDoc(collection(db,'chat'), { text:'', photoUrl:url, author:currentWho, reactions:[], createdAt:serverTimestamp() });
+    lsSendMsg({text:'', photoUrl:url, author:currentWho, reactions:[], createdAt:new Date().toISOString()});
   } catch(e) { toast('Error: '+e.message); }
 };
 
 window.addReaction = async (id, emoji) => {
-  const snap = await getDocs(query(collection(db,'chat')));
+  const snap = {docs: lsGetMsgs().map(d=>({id:d.id, data:()=>d}))};
   const d = snap.docs.find(x=>x.id===id); if(!d) return;
-  const reacts = d.data().reactions||[];
+  const reacts = d.reactions||[];
   if (!reacts.includes(emoji)) reacts.push(emoji);
-  await setDoc(doc(db,'chat',id), {...d.data(), reactions:reacts});
+  lsUpdateMsgReactions(id, reacts); renderChat(lsGetMsgs());
 };
 
 window.chatTyping = async () => {
   clearTimeout(typingTimer);
-  try { await setDoc(doc(db,'typing','status'), {[currentWho]:Date.now()}, {merge:true}); }
+  try { lsSetTyping(currentWho, Date.now()); }
   catch {}
   typingTimer = setTimeout(clearTyping, 3000);
 };
 
 async function clearTyping() {
   clearTimeout(typingTimer);
-  try { await setDoc(doc(db,'typing','status'), {[currentWho]:0}, {merge:true}); } catch {}
+  try { lsSetTyping(currentWho, 0); } catch {}
 }
 
 window.autoGrow = (el) => { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; };
