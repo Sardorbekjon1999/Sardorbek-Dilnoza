@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sardorbek & Dilnoza's Diary 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --cream: #D6DBE2;
+  --warm: #CDD5DC;
+  --blush: #A7BCD4;
+  --rose: #B3C6D8;
+  --deep: #3F3F40;
+  --ink: #3F3F40;
+  --muted: #8291A1;
+  --white: #ffffff;
+  --border: rgba(163,188,212,0.3);
+  --radius: 16px;
+  --serif: 'Lora', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+}
+body.has-cover {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+body.has-cover::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(214,219,226,0.72);
+  z-index: 0;
+  pointer-events: none;
+}
+body.has-cover > * { position: relative; z-index: 1; }
+
+/* AUTH */
+#auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.auth-card {
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.auth-icon { font-size: 2.8rem; margin-bottom: 0.75rem; }
+.auth-card h1 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+.auth-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5; }
+.who-row { display: flex; gap: 10px; margin-bottom: 1.25rem; }
+.who-btn { flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: 12px; background: var(--cream); font-family: var(--sans); font-size: 0.9rem; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+.who-btn.sel { background: var(--warm); border-color: var(--blush); color: var(--deep); font-weight: 500; }
+.auth-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 10px; font-family: var(--sans); font-size: 0.95rem; background: var(--cream); color: var(--ink); margin-bottom: 0.75rem; outline: none; transition: border-color 0.2s; text-align: center; letter-spacing: 0.15em; }
+.auth-input:focus { border-color: var(--rose); }
+.auth-error { color: var(--rose); font-size: 0.82rem; margin-bottom: 0.75rem; display: none; }
+.btn-primary { width: 100%; padding: 0.85rem; background: var(--rose); color: white; border: none; border-radius: 12px; font-family: var(--sans); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+.btn-primary:hover { background: var(--deep); }
+.auth-hint { margin-top: 1rem; font-size: 0.78rem; color: var(--muted); }
+
+/* APP */
+#app { display: none; max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* HEADER BANNER */
+.header-banner { width: 100%; height: 180px; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; display: none; position: relative; cursor: pointer; }
+.header-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.header-banner-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(44,26,20,0.6) 0%, transparent 55%); display: flex; align-items: flex-end; padding: 1rem 1.25rem; }
+.header-banner-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: white; }
+.header-banner-change { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.4); color: white; border: none; border-radius: 8px; padding: 5px 10px; font-size: 0.75rem; cursor: pointer; font-family: var(--sans); }
+.header-banner.on { display: block; }
+
+/* HEADER */
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.header-left h1 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--ink); }
+.header-left p { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.who-badge { background: var(--warm); border: 1px solid var(--border); border-radius: 999px; padding: 5px 14px; font-size: 0.82rem; color: var(--rose); font-weight: 500; }
+.lock-btn { font-size: 0.8rem; color: var(--muted); background: none; border: none; cursor: pointer; padding: 4px 8px; }
+.lock-btn:hover { color: var(--rose); }
+
+/* TABS */
+.tabs { display: flex; gap: 6px; margin-bottom: 1.5rem; background: rgba(245,237,224,0.85); padding: 4px; border-radius: 12px; }
+.tab { flex: 1; padding: 0.55rem; text-align: center; font-size: 0.85rem; font-weight: 500; color: var(--muted); background: none; border: none; border-radius: 9px; cursor: pointer; transition: all 0.2s; }
+.tab.active { background: white; color: var(--rose); box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+
+/* SECTIONS */
+.section { display: none; }
+.section.on { display: block; }
+.write-card { background: rgba(255,255,255,0.93); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
+
+.mood-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.mood-pill { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--cream); font-size: 0.82rem; cursor: pointer; color: var(--muted); transition: all 0.15s; font-family: var(--sans); }
+.mood-pill.sel { background: var(--warm); border-color: var(--blush); color: var(--deep); }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+label { font-size: 0.75rem; color: var(--muted); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+input[type=text], input[type=email], input[type=password], select, textarea {
+  padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 10px;
+  font-family: var(--sans); font-size: 0.9rem; background: var(--cream); color: var(--ink);
+  outline: none; transition: border-color 0.2s; width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--blush); }
+textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize: vertical; min-height: 160px; }
+
+.photo-zone { border: 1.5px dashed var(--blush); border-radius: 12px; padding: 1.25rem; text-align: center; cursor: pointer; margin: 12px 0; transition: background 0.15s; background: var(--cream); }
+.photo-zone:hover { background: var(--warm); }
+.photo-zone input { display: none; }
+.photo-zone-text { font-size: 0.85rem; color: var(--muted); }
+.photo-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin-top: 10px; }
+.photo-thumb { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1; }
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-thumb .rm { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+.tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+.tag-chip { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); font-size: 0.78rem; cursor: pointer; color: var(--muted); transition: all 0.15s; background: var(--cream); }
+.tag-chip.sel { background: var(--warm); border-color: var(--blush); color: var(--deep); }
+
+.save-btn { width: 100%; padding: 0.85rem; background: var(--rose); color: white; border: none; border-radius: 12px; font-family: var(--sans); font-size: 0.95rem; font-weight: 500; cursor: pointer; margin-top: 12px; transition: background 0.2s; }
+.save-btn:hover { background: var(--deep); }
+.save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+.stat { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; text-align: center; }
+.stat-num { font-family: var(--serif); font-size: 1.6rem; color: var(--rose); }
+.stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+/* ENTRIES */
+.entry-list { display: flex; flex-direction: column; gap: 10px; }
+.entry-card { background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; cursor: pointer; transition: border-color 0.15s; }
+.entry-card:hover { border-color: var(--blush); }
+.entry-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 5px; }
+.entry-date { font-size: 0.75rem; color: var(--muted); }
+.entry-author { font-size: 0.72rem; background: var(--warm); color: var(--rose); padding: 2px 8px; border-radius: 999px; }
+.entry-mood { font-size: 1.2rem; }
+.entry-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; margin-bottom: 4px; color: var(--ink); }
+.entry-preview { font-size: 0.85rem; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.entry-thumb-strip { display: flex; gap: 5px; margin-top: 8px; }
+.entry-thumb-strip img { width: 52px; height: 52px; object-fit: cover; border-radius: 7px; }
+.etags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+.etag { font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; background: var(--warm); color: var(--deep); }
+.empty { text-align: center; padding: 3rem 0; color: var(--muted); font-size: 0.9rem; }
+.empty span { display: block; font-size: 2rem; margin-bottom: 8px; }
+
+/* DETAIL */
+.detail-back { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); cursor: pointer; margin-bottom: 1rem; background: none; border: none; font-family: var(--sans); }
+.detail-back:hover { color: var(--rose); }
+.detail-card { background: rgba(255,255,255,0.95); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; }
+.detail-header { margin-bottom: 1.25rem; }
+.detail-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--ink); }
+.detail-meta { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
+.detail-body { font-family: var(--serif); font-size: 1.05rem; line-height: 1.9; color: var(--ink); white-space: pre-wrap; margin: 1.25rem 0; }
+.detail-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 1rem; }
+.detail-photos img { width: 100%; border-radius: 10px; object-fit: cover; aspect-ratio: 1; cursor: pointer; transition: opacity 0.15s; }
+.detail-photos img:hover { opacity: 0.85; }
+.del-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid #e0a0a0; color: #c97d6e; background: transparent; font-size: 0.78rem; cursor: pointer; font-family: var(--sans); margin-top: 1rem; }
+.del-btn:hover { background: #fef0ee; }
+
+/* SETTINGS */
+.settings-card { background: rgba(255,255,255,0.93); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
+.settings-card h3 { font-family: var(--serif); font-size: 1rem; font-weight: 500; margin-bottom: 1rem; color: var(--ink); }
+.setting-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.settings-save { padding: 0.7rem 1.5rem; background: var(--rose); color: white; border: none; border-radius: 10px; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+.settings-save:hover { background: var(--deep); }
+.settings-note { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+
+/* COVER PHOTO */
+.cover-preview { width: 100%; height: 120px; border-radius: 12px; overflow: hidden; border: 1.5px dashed var(--blush); display: flex; align-items: center; justify-content: center; cursor: pointer; margin-bottom: 10px; background: var(--cream); position: relative; transition: background 0.15s; }
+.cover-preview:hover { background: var(--warm); }
+.cover-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.cover-preview img.on { display: block; }
+.cover-preview-label { position: absolute; font-size: 0.85rem; color: var(--muted); }
+.cover-preview.has-img .cover-preview-label { color: white; background: rgba(0,0,0,0.35); padding: 4px 10px; border-radius: 6px; }
+.cover-actions { display: flex; gap: 8px; }
+.cover-action-btn { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--cream); font-size: 0.8rem; color: var(--muted); cursor: pointer; font-family: var(--sans); }
+.cover-action-btn:hover { border-color: var(--blush); color: var(--rose); }
+
+/* LIGHTBOX */
+#lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 999; align-items: center; justify-content: center; }
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; }
+#lightbox-close { position: fixed; top: 1rem; right: 1.5rem; color: white; font-size: 1.5rem; cursor: pointer; background: none; border: none; }
+
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: white; padding: 0.65rem 1.25rem; border-radius: 10px; font-size: 0.85rem; transition: transform 0.3s; z-index: 100; white-space: nowrap; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.loader { display: none; position: fixed; inset: 0; background: rgba(250,247,242,0.8); z-index: 50; align-items: center; justify-content: center; }
+.loader.on { display: flex; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--blush); border-top-color: var(--rose); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+/* ── CHAT ───────────────────────────────────────────────────────────────────── */
+.chat-wrap { display:flex; flex-direction:column; height:calc(100vh - 260px); min-height:400px; background:rgba(255,255,255,0.93); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.chat-messages { flex:1; overflow-y:auto; padding:1.25rem; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
+.chat-messages::-webkit-scrollbar { width:4px; }
+.chat-messages::-webkit-scrollbar-thumb { background:var(--blush); border-radius:4px; }
+.msg { display:flex; flex-direction:column; max-width:72%; }
+.msg.me { align-self:flex-end; align-items:flex-end; }
+.msg.them { align-self:flex-start; align-items:flex-start; }
+.msg-bubble { padding:0.6rem 0.9rem; border-radius:18px; font-size:0.92rem; line-height:1.5; word-break:break-word; }
+.msg.me .msg-bubble { background:var(--rose); color:white; border-bottom-right-radius:4px; }
+.msg.them .msg-bubble { background:var(--warm); color:var(--ink); border-bottom-left-radius:4px; }
+.msg-bubble img { max-width:200px; border-radius:10px; margin-top:4px; display:block; cursor:pointer; }
+.msg-meta { font-size:0.7rem; color:var(--muted); margin-top:3px; padding:0 4px; }
+.chat-typing { padding:0.4rem 1.25rem; font-size:0.78rem; color:var(--muted); font-style:italic; min-height:22px; }
+.chat-input-row { display:flex; gap:8px; padding:0.75rem 1rem; border-top:1px solid var(--border); background:rgba(255,255,255,0.97); align-items:flex-end; }
+.chat-input { flex:1; padding:0.6rem 0.9rem; border:1px solid var(--border); border-radius:22px; font-family:var(--sans); font-size:0.9rem; background:var(--cream); color:var(--ink); outline:none; resize:none; max-height:100px; line-height:1.5; transition:border-color 0.2s; }
+.chat-input:focus { border-color:var(--blush); }
+.chat-send-btn { width:40px; height:40px; border-radius:50%; background:var(--rose); color:white; border:none; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.2s; }
+.chat-send-btn:hover { background:var(--deep); }
+.chat-photo-btn { width:36px; height:36px; border-radius:50%; background:var(--warm); border:1px solid var(--border); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.chat-photo-btn:hover { background:var(--blush); }
+.chat-date-divider { text-align:center; font-size:0.72rem; color:var(--muted); padding:4px 0; position:relative; }
+.chat-date-divider span { background:rgba(255,255,255,0.9); padding:0 10px; position:relative; z-index:1; }
+.chat-date-divider::before { content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--border); }
+.chat-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:0.88rem; gap:8px; }
+.chat-empty span { font-size:2rem; }
+.react-row { display:flex; gap:4px; margin-top:3px; flex-wrap:wrap; }
+.react-btn { background:rgba(255,255,255,0.8); border:1px solid var(--border); border-radius:999px; padding:1px 7px; font-size:0.75rem; cursor:pointer; transition:background 0.15s; }
+.react-btn:hover { background:var(--warm); }
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="spinner"></div></div>
+<div class="toast" id="toast"></div>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-icon">💕</div>
+    <h1>Sardorbek & Dilnoza's Diary</h1>
+    <p>Who's writing today?</p>
+    <div class="who-row">
+      <button class="who-btn" id="who-s" onclick="selectWho('Sardorbek')">🧔 Sardorbek</button>
+      <button class="who-btn" id="who-d" onclick="selectWho('Dilnoza')">👩 Dilnoza</button>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+    <input class="auth-input" type="password" id="auth-pass" placeholder="• • • • • •" />
+    <button class="btn-primary" onclick="unlock()">Open diary 💕</button>
+    <p class="auth-hint">Enter your shared password</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header-banner" id="header-banner" onclick="triggerCoverPick()">
+    <img id="banner-img" src="" alt="Cover photo" />
+    <div class="header-banner-overlay">
+      <span class="header-banner-title">💕 Sardorbek & Dilnoza's Diary</span>
+    </div>
+    <button class="header-banner-change" onclick="event.stopPropagation();triggerCoverPick()">📷 Change</button>
+  </div>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>💕 Sardorbek & Dilnoza</h1>
+      <p id="header-date"></p>
+    </div>
+    <div class="header-right">
+      <div class="who-badge" id="who-badge">—</div>
+      <button class="lock-btn" onclick="lockDiary()" title="Lock diary">🔒</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('write',this)">✏️ Write</button>
+    <button class="tab" onclick="switchTab('browse',this)">📖 Entries</button>
+    <button class="tab" onclick="switchTab('chat',this)" id="tab-chat">💬 Chat</button>
+    <button class="tab" onclick="switchTab('settings',this)">⚙️ Settings</button>
+  </div>
+
+  <!-- WRITE -->
+  <div class="section on" id="sec-write">
+    <div class="write-card">
+      <div style="margin-bottom:1rem">
+        <label style="margin-bottom:6px;display:block">How are you feeling?</label>
+        <div class="mood-row">
+          <button class="mood-pill" onclick="setMood(this,'😊','happy')">😊 Happy</button>
+          <button class="mood-pill" onclick="setMood(this,'🥰','in love')">🥰 In love</button>
+          <button class="mood-pill" onclick="setMood(this,'😌','peaceful')">😌 Peaceful</button>
+          <button class="mood-pill" onclick="setMood(this,'😄','excited')">😄 Excited</button>
+          <button class="mood-pill" onclick="setMood(this,'🥺','emotional')">🥺 Emotional</button>
+          <button class="mood-pill" onclick="setMood(this,'😔','melancholy')">😔 Melancholy</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Title</label><input type="text" id="e-title" placeholder="Give this entry a title..." /></div>
+        <div class="field"><label>Location</label><input type="text" id="e-loc" placeholder="Where were you?" /></div>
+      </div>
+      <div class="field" style="margin-bottom:10px">
+        <label>Your entry</label>
+        <textarea id="e-body" placeholder="Write about your day, a feeling, a memory you want to keep forever..."></textarea>
+      </div>
+      <label>Photos</label>
+      <div class="photo-zone" onclick="document.getElementById('photo-input').click()">
+        <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)" />
+        <div class="photo-zone-text">📷 Tap to add photos</div>
+      </div>
+      <div class="photo-preview-grid" id="photo-preview"></div>
+      <label style="margin-top:10px;display:block">Tags</label>
+      <div class="tag-row">
+        <span class="tag-chip" onclick="toggleTag(this,'date night')">🌙 Date night</span>
+        <span class="tag-chip" onclick="toggleTag(this,'travel')">✈️ Travel</span>
+        <span class="tag-chip" onclick="toggleTag(this,'milestone')">🎉 Milestone</span>
+        <span class="tag-chip" onclick="toggleTag(this,'first time')">⭐ First time</span>
+        <span class="tag-chip" onclick="toggleTag(this,'everyday')">☀️ Everyday</span>
+        <span class="tag-chip" onclick="toggleTag(this,'memory')">📷 Memory</span>
+      </div>
+      <button class="save-btn" id="save-btn" onclick="saveEntry()">Save entry 💕</button>
+    </div>
+  </div>
+
+  <!-- BROWSE -->
+  <div class="section" id="sec-browse">
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Entries</div></div>
+      <div class="stat"><div class="stat-num" id="s-streak">0</div><div class="stat-lbl">Day streak</div></div>
+      <div class="stat"><div class="stat-num" id="s-mood">—</div><div class="stat-lbl">Top mood</div></div>
+    </div>
+    <div id="entry-list"></div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="section" id="sec-detail">
+    <button class="detail-back" onclick="switchTab('browse',document.querySelector('.tab:nth-child(2)'))">← Back to entries</button>
+    <div class="detail-card" id="detail-inner"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="section" id="sec-settings">
+
+    <div class="settings-card">
+      <h3>🖼 Cover photo</h3>
+      <p class="settings-note">This photo appears as the full background, header banner and on the lock screen. Only you two will see it.</p>
+      <div class="cover-preview" id="cover-preview" onclick="triggerCoverPick()">
+        <img id="cover-preview-img" src="" alt="Cover" />
+        <span class="cover-preview-label" id="cover-preview-label">📷 Tap to choose a photo</span>
+      </div>
+      <input type="file" id="cover-input" accept="image/*" style="display:none" onchange="handleCoverPhoto(this)" />
+      <div class="cover-actions">
+        <button class="cover-action-btn" onclick="triggerCoverPick()">📷 Choose photo</button>
+        <button class="cover-action-btn" onclick="removeCover()">✕ Remove</button>
+      </div>
+    </div>
+
+
+    <div class="settings-card">
+      <h3>🖼️ ImgBB photo storage</h3>
+      <p class="settings-note">Photos are uploaded to ImgBB (free, unlimited). Get your free API key at <strong>imgbb.com</strong> → Account → API.</p>
+      <div class="setting-row"><label>ImgBB API Key</label><input type="text" id="cfg-imgbb" placeholder="Paste your ImgBB API key here" /></div>
+      <button class="settings-save" onclick="saveImgbbKey()">Save key</button>
+      <div id="imgbb-status" style="font-size:0.8rem;color:var(--muted);margin-top:6px;"></div>
+    </div>
+
+    <div class="settings-card">
+      <h3>🔑 Shared password</h3>
+      <p class="settings-note">Change the password you both use to open the diary. Make sure to tell your partner!</p>
+      <div class="setting-row"><label>Current password</label><input type="password" id="pw-current" placeholder="Current password" /></div>
+      <div class="setting-row"><label>New password</label><input type="password" id="pw-new" placeholder="New password" /></div>
+      <div class="setting-row"><label>Confirm new password</label><input type="password" id="pw-confirm" placeholder="Confirm new password" /></div>
+      <button class="settings-save" onclick="changePassword()">Update password</button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- CHAT -->
+  <div class="section" id="sec-chat">
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>
+      </div>
+      <div class="chat-typing" id="chat-typing"></div>
+      <div class="chat-input-row">
+        <button class="chat-photo-btn" onclick="document.getElementById('chat-photo-input').click()" title="Send photo">📷</button>
+        <input type="file" id="chat-photo-input" accept="image/*" style="display:none" onchange="sendChatPhoto(this)" />
+        <textarea class="chat-input" id="chat-input" placeholder="Write a message..." rows="1"
+          oninput="chatTyping();autoGrow(this)"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+        <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Photo" />
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyB72k3TX8hBQ5DUUdF5nzZNLYYNDjWniZE",
+  authDomain: "our-diary-5c4d2.firebaseapp.com",
+  projectId: "our-diary-5c4d2",
+  storageBucket: "our-diary-5c4d2.firebasestorage.app",
+  messagingSenderId: "951371710948",
+  appId: "1:951371710948:web:ce73f8523d2ee4a23a07f1"
+};
+// ──────────────────────────────────────────────────────────────────────────────
+
+// ─── SET YOUR SHARED PASSWORD HERE (change before deploying!) ─────────────────
+const DEFAULT_PASSWORD = 'Sardorbek&Dilnoza';
+// ──────────────────────────────────────────────────────────────────────────────
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+let currentWho = '';
+let entries = [];
+let selectedMood = '';
+let selectedMoodEmoji = '';
+let selectedTags = [];
+let photoFiles = [];
+
+// ── COVER PHOTO ───────────────────────────────────────────────────────────────
+function applyCover(dataUrl) {
+  if (!dataUrl) return;
+  document.body.style.backgroundImage = `url('${dataUrl}')`;
+  document.body.classList.add('has-cover');
+  document.getElementById('banner-img').src = dataUrl;
+  document.getElementById('header-banner').classList.add('on');
+  const prevImg = document.getElementById('cover-preview-img');
+  prevImg.src = dataUrl; prevImg.classList.add('on');
+  document.getElementById('cover-preview').classList.add('has-img');
+  document.getElementById('cover-preview-label').textContent = '📷 Change photo';
+}
+
+window.removeCover = () => {
+  localStorage.removeItem('cover_photo');
+  document.body.style.backgroundImage = '';
+  document.body.classList.remove('has-cover');
+  document.getElementById('header-banner').classList.remove('on');
+  document.getElementById('banner-img').src = '';
+  document.getElementById('cover-preview').classList.remove('has-img');
+  document.getElementById('cover-preview-img').classList.remove('on');
+  document.getElementById('cover-preview-label').textContent = '📷 Tap to choose a photo';
+  toast('Cover photo removed');
+};
+
+window.triggerCoverPick = () => document.getElementById('cover-input').click();
+
+window.handleCoverPhoto = (input) => {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { localStorage.setItem('cover_photo', e.target.result); applyCover(e.target.result); toast('Cover photo updated 💕'); };
+  reader.readAsDataURL(file);
+};
+
+const savedCover = localStorage.getItem('cover_photo');
+if (savedCover) applyCover(savedCover);
+
+// ── AUTH (simple password) ────────────────────────────────────────────────────
+function getPassword() { return localStorage.getItem('diary_password') || DEFAULT_PASSWORD; }
+
+window.selectWho = (who) => {
+  currentWho = who;
+  document.getElementById('who-s').classList.toggle('sel', who === 'Sardorbek');
+  document.getElementById('who-d').classList.toggle('sel', who === 'Dilnoza');
+};
+
+window.unlock = () => {
+  if (!currentWho) { showError('Please choose who you are 💕'); return; }
+  const pass = document.getElementById('auth-pass').value;
+  if (pass !== getPassword()) { showError('Wrong password, try again 🔒'); return; }
+  sessionStorage.setItem('diary_who', currentWho);
+  openApp();
+};
+
+function showError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+
+function openApp() {
+  const who = sessionStorage.getItem('diary_who');
+  if (!who) return;
+  currentWho = who;
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('who-badge').textContent = who === 'Sardorbek' ? '🧔 Sardorbek' : '👩 Dilnoza';
+  document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  loadSettings();
+  loadEntries();
+}
+
+window.lockDiary = () => {
+  sessionStorage.removeItem('diary_who');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('auth-pass').value = '';
+  document.getElementById('who-s').classList.remove('sel');
+  document.getElementById('who-d').classList.remove('sel');
+  currentWho = '';
+};
+
+window.changePassword = () => {
+  const cur = document.getElementById('pw-current').value;
+  const nw = document.getElementById('pw-new').value;
+  const conf = document.getElementById('pw-confirm').value;
+  if (cur !== getPassword()) { toast('Current password is wrong'); return; }
+  if (!nw || nw.length < 4) { toast('New password must be at least 4 characters'); return; }
+  if (nw !== conf) { toast("Passwords don't match"); return; }
+  localStorage.setItem('diary_password', nw);
+  document.getElementById('pw-current').value = '';
+  document.getElementById('pw-new').value = '';
+  document.getElementById('pw-confirm').value = '';
+  toast('Password updated! Tell your partner 💕');
+};
+
+// Auto-open if session still active
+if (sessionStorage.getItem('diary_who')) openApp();
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+window.switchTab = (name, btn) => {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('on');
+  if (btn) btn.classList.add('active');
+  if (name === 'browse') renderEntries();
+};
+
+// ── WRITE ─────────────────────────────────────────────────────────────────────
+window.setMood = (btn, emoji, label) => {
+  document.querySelectorAll('.mood-pill').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  selectedMood = label; selectedMoodEmoji = emoji;
+};
+
+window.toggleTag = (el, tag) => {
+  if (selectedTags.includes(tag)) { selectedTags = selectedTags.filter(t=>t!==tag); el.classList.remove('sel'); }
+  else { selectedTags.push(tag); el.classList.add('sel'); }
+};
+
+window.handlePhotos = (input) => {
+  Array.from(input.files).forEach(f => { if (!photoFiles.find(x=>x.name===f.name)) photoFiles.push(f); });
+  renderPreviews();
+};
+
+function renderPreviews() {
+  const grid = document.getElementById('photo-preview');
+  grid.innerHTML = '';
+  photoFiles.forEach((f,i) => {
+    const div = document.createElement('div');
+    div.className = 'photo-thumb';
+    div.innerHTML = `<img src="${URL.createObjectURL(f)}" /><button class="rm" onclick="removePhoto(${i})">✕</button>`;
+    grid.appendChild(div);
+  });
+}
+window.removePhoto = (i) => { photoFiles.splice(i,1); renderPreviews(); };
+
+window.saveEntry = async () => {
+  const title = document.getElementById('e-title').value.trim();
+  const body = document.getElementById('e-body').value.trim();
+  const loc = document.getElementById('e-loc').value.trim();
+  if (!body) { toast('Write something first 💕'); return; }
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.textContent = 'Saving...';
+  showLoader(true);
+  try {
+    const photoURLs = [];
+    for (const file of photoFiles) {
+      try { photoURLs.push(await uploadToImgbb(file)); }
+      catch(e) { toast('Photo error: ' + e.message); }
+    }
+    const entry = {
+      title: title||'Untitled', body, location: loc,
+      mood: selectedMood, moodEmoji: selectedMoodEmoji,
+      tags: [...selectedTags], photos: photoURLs,
+      author: currentWho, createdAt: serverTimestamp()
+    };
+    await addDoc(collection(db,'entries'), entry);
+    document.getElementById('e-title').value='';
+    document.getElementById('e-body').value='';
+    document.getElementById('e-loc').value='';
+    document.querySelectorAll('.mood-pill').forEach(b=>b.classList.remove('sel'));
+    document.querySelectorAll('.tag-chip').forEach(b=>b.classList.remove('sel'));
+    document.getElementById('photo-preview').innerHTML='';
+    document.getElementById('photo-input').value='';
+    photoFiles=[]; selectedMood=''; selectedMoodEmoji=''; selectedTags=[];
+    toast('Entry saved! 💕');
+    switchTab('browse', document.querySelector('.tab:nth-child(2)'));
+    await loadEntries();
+  } catch(e) { toast('Error: '+e.message); }
+  btn.disabled=false; btn.textContent='Save entry 💕';
+  showLoader(false);
+};
+
+// ── ENTRIES ───────────────────────────────────────────────────────────────────
+async function loadEntries() {
+  try {
+    const q = query(collection(db,'entries'), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+    entries = snap.docs.map(d=>({id:d.id,...d.data()}));
+  } catch(e) { entries=[]; }
+}
+
+function renderEntries() {
+  const el = document.getElementById('entry-list');
+  document.getElementById('s-total').textContent = entries.length;
+  const moodCount={};
+  entries.forEach(e=>{ if(e.moodEmoji) moodCount[e.moodEmoji]=(moodCount[e.moodEmoji]||0)+1; });
+  const topMood = Object.entries(moodCount).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('s-mood').textContent = topMood ? topMood[0] : '—';
+  const dates=[...new Set(entries.map(e=>e.createdAt?.toDate?e.createdAt.toDate().toISOString().slice(0,10):''))];
+  let streak=0, check=new Date().toISOString().slice(0,10);
+  while(dates.includes(check)){streak++;const d=new Date(check);d.setDate(d.getDate()-1);check=d.toISOString().slice(0,10);}
+  document.getElementById('s-streak').textContent=streak;
+  if(!entries.length){el.innerHTML='<div class="empty"><span>📖</span>No entries yet.<br>Write your first memory together.</div>';return;}
+  el.innerHTML='<div class="entry-list">'+entries.map(e=>{
+    const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
+    const thumbs=(e.photos||[]).slice(0,3).map(u=>`<img src="${u}" alt="photo" />`).join('');
+    const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
+    const authorIcon = e.author==='Sardorbek'?'🧔':'👩';
+    return `<div class="entry-card" onclick="openEntry('${e.id}')">
+      <div class="entry-top"><div><div class="entry-date">${date}${e.location?' · '+e.location:''}</div><span class="entry-author">${authorIcon} ${e.author||'?'}</span></div><div class="entry-mood">${e.moodEmoji||''}</div></div>
+      <div class="entry-title">${e.title}</div>
+      <div class="entry-preview">${e.body}</div>
+      ${thumbs?`<div class="entry-thumb-strip">${thumbs}</div>`:''}
+      ${tags?`<div class="etags">${tags}</div>`:''}
+    </div>`;
+  }).join('')+'</div>';
+}
+
+window.openEntry = (id) => {
+  const e=entries.find(x=>x.id===id); if(!e) return;
+  const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'';
+  const photos=(e.photos||[]).map(u=>`<img src="${u}" alt="photo" onclick="openLightbox('${u}')" />`).join('');
+  const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
+  const authorIcon=e.author==='Sardorbek'?'🧔':'👩';
+  document.getElementById('detail-inner').innerHTML=`
+    <div class="detail-header">
+      <div class="detail-title">${e.moodEmoji?e.moodEmoji+' ':''}${e.title}</div>
+      <div class="detail-meta">${date}${e.location?' · '+e.location:''} · ${authorIcon} ${e.author||'Unknown'}${e.mood?' · feeling '+e.mood:''}</div>
+    </div>
+    ${tags?`<div class="etags" style="margin-bottom:10px">${tags}</div>`:''}
+    <div class="detail-body">${e.body}</div>
+    ${photos?`<div class="detail-photos">${photos}</div>`:''}
+    ${e.author===currentWho?`<button class="del-btn" onclick="deleteEntry('${e.id}')">🗑 Delete entry</button>`:''}`;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-detail').classList.add('on');
+};
+
+window.deleteEntry = async (id) => {
+  if(!confirm('Delete this entry? This cannot be undone.')) return;
+  showLoader(true);
+  try{await deleteDoc(doc(db,'entries',id));entries=entries.filter(e=>e.id!==id);toast('Entry deleted.');switchTab('browse',document.querySelector('.tab:nth-child(2)'));renderEntries();}
+  catch(e){toast('Error: '+e.message);}
+  showLoader(false);
+};
+
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+function loadSettings() {}
+window.saveSettings = () => { toast('Settings saved ✓'); };
+
+
+// ── IMGBB PHOTO UPLOAD ────────────────────────────────────────────────────────
+function getImgbbKey() { return localStorage.getItem('cfg_imgbb') || ''; }
+
+window.saveImgbbKey = () => {
+  const val = document.getElementById('cfg-imgbb').value.trim();
+  if (!val) { toast('Please paste your API key'); return; }
+  localStorage.setItem('cfg_imgbb', val);
+  document.getElementById('imgbb-status').textContent = '✅ Key saved!';
+  toast('ImgBB key saved ✓');
+};
+
+async function uploadToImgbb(file) {
+  const key = getImgbbKey();
+  if (!key) throw new Error('No ImgBB API key — add it in Settings');
+  const form = new FormData();
+  form.append('image', file);
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, { method:'POST', body:form });
+  if (!res.ok) throw new Error('ImgBB upload failed: ' + res.statusText);
+  const data = await res.json();
+  return data.data.url;
+}
+
+// Restore ImgBB key in settings field on load
+setTimeout(() => {
+  const el = document.getElementById('cfg-imgbb');
+  if (el) {
+    const k = getImgbbKey();
+    el.value = k;
+    if (k) document.getElementById('imgbb-status').textContent = '✅ Key saved';
+  }
+}, 400);
+
+
+// ── CHAT ─────────────────────────────────────────────────────────────────────
+let chatUnsub = null;
+let typingTimer = null;
+const REACTIONS = ['❤️','😂','😮','😢','👍'];
+
+function startChat() {
+  if (chatUnsub) return;
+  const q = query(collection(db,'chat'), orderBy('createdAt','asc'));
+  chatUnsub = onSnapshot(q, snap => {
+    renderChat(snap.docs.map(d=>({id:d.id,...d.data()})));
+  });
+  onSnapshot(doc(db,'typing','status'), snap => {
+    const data = snap.data() || {};
+    const other = currentWho === 'Sardorbek' ? 'Dilnoza' : 'Sardorbek';
+    const active = data[other] && (Date.now() - data[other]) < 4000;
+    document.getElementById('chat-typing').textContent = active ? other + ' is typing...' : '';
+  });
+}
+
+function renderChat(msgs) {
+  const box = document.getElementById('chat-messages');
+  if (!msgs.length) {
+    box.innerHTML = '<div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>';
+    return;
+  }
+  let lastDate = '';
+  box.innerHTML = msgs.map(m => {
+    const isMe = m.author === currentWho;
+    const ts = m.createdAt?.toDate ? m.createdAt.toDate() : new Date();
+    const time = ts.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    const dateStr = ts.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    let divider = '';
+    if (dateStr !== lastDate) { lastDate = dateStr; divider = `<div class="chat-date-divider"><span>${dateStr}</span></div>`; }
+    const reacts = (m.reactions||[]).map(r=>`<span>${r}</span>`).join('');
+    const reactBtns = REACTIONS.map(r=>`<button class="react-btn" onclick="addReaction('${m.id}','${r}')">${r}</button>`).join('');
+    const content = m.photoUrl
+      ? `<img src="${m.photoUrl}" onclick="openLightbox('${m.photoUrl}')" />${m.text?'<div style="margin-top:4px">'+m.text+'</div>':''}`
+      : m.text;
+    return `${divider}<div class="msg ${isMe?'me':'them'}">
+      <div class="msg-bubble">${content}</div>
+      ${reacts?`<div class="react-row">${reacts}</div>`:''}
+      <div class="msg-meta">${m.author} · ${time} <span style="margin-left:5px">${reactBtns}</span></div>
+    </div>`;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+window.sendMessage = async () => {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = ''; inp.style.height = '';
+  clearTyping();
+  await addDoc(collection(db,'chat'), { text, photoUrl:null, author:currentWho, reactions:[], createdAt:serverTimestamp() });
+};
+
+window.sendChatPhoto = async (input) => {
+  const file = input.files[0]; if (!file) return;
+  input.value = '';
+  toast('Uploading photo...');
+  try {
+    let url;
+    url = await uploadToImgbb(file);
+    await addDoc(collection(db,'chat'), { text:'', photoUrl:url, author:currentWho, reactions:[], createdAt:serverTimestamp() });
+  } catch(e) { toast('Error: '+e.message); }
+};
+
+window.addReaction = async (id, emoji) => {
+  const snap = await getDocs(query(collection(db,'chat')));
+  const d = snap.docs.find(x=>x.id===id); if(!d) return;
+  const reacts = d.data().reactions||[];
+  if (!reacts.includes(emoji)) reacts.push(emoji);
+  await setDoc(doc(db,'chat',id), {...d.data(), reactions:reacts});
+};
+
+window.chatTyping = async () => {
+  clearTimeout(typingTimer);
+  try { await setDoc(doc(db,'typing','status'), {[currentWho]:Date.now()}, {merge:true}); }
+  catch {}
+  typingTimer = setTimeout(clearTyping, 3000);
+};
+
+async function clearTyping() {
+  clearTimeout(typingTimer);
+  try { await setDoc(doc(db,'typing','status'), {[currentWho]:0}, {merge:true}); } catch {}
+}
+
+window.autoGrow = (el) => { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; };
+
+// Patch switchTab to start chat listener
+const _origSwitch = window.switchTab;
+window.switchTab = (name, btn) => { _origSwitch(name, btn); if(name==='chat') startChat(); };
+
+// ── LIGHTBOX ─────────────────────────────────────────────────────────────────
+window.openLightbox=(url)=>{document.getElementById('lightbox-img').src=url;document.getElementById('lightbox').classList.add('open');};
+window.closeLightbox=()=>{document.getElementById('lightbox').classList.remove('open');};
+
+function showLoader(on){document.getElementById('loader').classList.toggle('on',on);}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+</script>
+
+</body>
+</html>
