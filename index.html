@@ -452,7 +452,7 @@ function applyCover(dataUrl) {
 }
 
 window.removeCover = () => {
-  localStorage.removeItem('cover_photo');
+    fsSetSetting('cover_photo', null).catch(()=>{});
   document.body.style.backgroundImage = '';
   document.body.classList.remove('has-cover');
   document.getElementById('header-banner').classList.remove('on');
@@ -465,15 +465,17 @@ window.removeCover = () => {
 
 window.triggerCoverPick = () => document.getElementById('cover-input').click();
 
-window.handleCoverPhoto = (input) => {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => { localStorage.setItem('cover_photo', e.target.result); applyCover(e.target.result); toast('Cover photo updated 💕'); };
-  reader.readAsDataURL(file);
+window.handleCoverPhoto = async (input) => {
+    const file = input.files[0]; if (!file) return;
+    toast('Uploading cover photo...');
+    try {
+          const url = await uploadToImgbb(file);
+          await fsSetSetting('cover_photo', url);
+          applyCover(url);
+          toast('Cover photo updated \u2665');
+    } catch(e) { toast('Error: '+e.message); }
 };
 
-const savedCover = localStorage.getItem('cover_photo');
-if (savedCover) applyCover(savedCover);
 
 // ── AUTH (simple password) ────────────────────────────────────────────────────
 async function getPassword(){const s=await fsGetSettings();return s.password||DEFAULT_PASSWORD;}
@@ -677,19 +679,19 @@ window.deleteEntry = async (id) => {
 };
 
 // ── SETTINGS ─────────────────────────────────────────────────────────────────
-function loadSettings() {}
+async function loadSettings(){try{const s=await fsGetSettings();if(s.cover_photo)applyCover(s.cover_photo);const k=s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';document.getElementById('cfg-imgbb').value=k;if(k)document.getElementById('imgbb-status').textContent='\u2705 Key saved';}catch(e){}}
 window.saveSettings = () => { toast('Settings saved ✓'); };
 
 
 // ── IMGBB PHOTO UPLOAD ────────────────────────────────────────────────────────
-function getImgbbKey() { return localStorage.getItem('cfg_imgbb') || 'cd4d71a9640f191fb1b05c1deef0610c'; }
+async function getImgbbKey(){try{const s=await fsGetSettings();return s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';}catch(e){return 'cd4d71a9640f191fb1b05c1deef0610c';}}
 
-window.saveImgbbKey = () => {
-  const val = document.getElementById('cfg-imgbb').value.trim();
-  if (!val) { toast('Please paste your API key'); return; }
-  localStorage.setItem('cfg_imgbb', val);
-  document.getElementById('imgbb-status').textContent = '✅ Key saved!';
-  toast('ImgBB key saved ✓');
+window.saveImgbbKey = async () => {
+    const val = document.getElementById('cfg-imgbb').value.trim();
+    if (!val) { toast('Please paste your API key'); return; }
+    await fsSetSetting('cfg_imgbb', val);
+    document.getElementById('imgbb-status').textContent = '\u2705 Key saved!';
+    toast('ImgBB key saved \u2713');
 };
 
 async function uploadToImgbb(file) {
