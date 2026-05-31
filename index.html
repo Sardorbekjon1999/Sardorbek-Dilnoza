@@ -484,7 +484,7 @@ window.selectWho = (who) => {
   document.getElementById('who-d').classList.toggle('sel', who === 'Dilnoza');
 };
 
-window.unlock = () => {
+window.unlock = async () => {
   if (!currentWho) { showError('Please choose who you are 💕'); return; }
   const pass = document.getElementById('auth-pass').value;
   if (pass !== await getPassword()) { showError('Wrong password, try again 🔒'); return; }
@@ -495,7 +495,7 @@ window.unlock = () => {
 function showError(msg) {
   const el = document.getElementById('auth-error');
   el.textContent = msg; el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 3000);
+  setTimeout(async () => el.style.display = 'none', 3000);
 }
 
 function openApp() {
@@ -595,7 +595,7 @@ window.saveEntry = async () => {
       song: document.getElementById('e-song').value.trim(), tags: [...selectedTags], photos: photoURLs,
       author: currentWho, createdAt: new Date().toISOString()
     };
-    lsAddEntry(entry);
+    await fsAddEntry(entry);
     document.getElementById('e-song').value=''; document.getElementById('e-title').value='';
     document.getElementById('e-body').value='';
     document.getElementById('e-loc').value='';
@@ -671,7 +671,7 @@ window.openEntry = (id) => {
 window.deleteEntry = async (id) => {
   if(!confirm('Delete this entry? This cannot be undone.')) return;
   showLoader(true);
-  try{lsDeleteEntry(id);entries=entries.filter(e=>e.id!==id);toast('Entry deleted.');switchTab('browse',document.querySelector('.tab:nth-child(2)'));renderEntries();}
+  try{await fsDeleteEntry(id);entries=entries.filter(e=>e.id!==id);toast('Entry deleted.');switchTab('browse',document.querySelector('.tab:nth-child(2)'));renderEntries();}
   catch(e){toast('Error: '+e.message);}
   showLoader(false);
 };
@@ -704,7 +704,7 @@ async function uploadToImgbb(file) {
 }
 
 // Restore ImgBB key in settings field on load
-setTimeout(() => {
+setTimeout(async () => {
   const el = document.getElementById('cfg-imgbb');
   if (el) {
     const k = await getImgbbKey();
@@ -779,28 +779,30 @@ window.sendChatPhoto = async (input) => {
   try {
     let url;
     url = await uploadToImgbb(file);
-    lsSendMsg({text:'', photoUrl:url, author:currentWho, reactions:[], createdAt:new Date().toISOString()});
+    await fsSendMsg({text:'', photoUrl:url, author:currentWho, reactions:[], createdAt:new Date().toISOString()});
   } catch(e) { toast('Error: '+e.message); }
 };
 
 window.addReaction = async (id, emoji) => {
-  const snap = {docs: lsGetMsgs().map(d=>({id:d.id, data:()=>d}))};
-  const d = snap.docs.find(x=>x.id===id); if(!d) return;
-  const reacts = d.reactions||[];
-  if (!reacts.includes(emoji)) reacts.push(emoji);
-  lsUpdateMsgReactions(id, reacts); renderChat(lsGetMsgs());
+    const ref = doc(db, 'messages', id);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return;
+    const reacts = snap.data().reactions || [];
+    if (!reacts.includes(emoji)) reacts.push(emoji);
+    await updateDoc(ref, {reactions: reacts});
+    await loadMessages();
 };
 
 window.chatTyping = async () => {
   clearTimeout(typingTimer);
-  try { lsSetTyping(currentWho, Date.now()); }
+  try { fsSetTyping(currentWho, Date.now()); }
   catch {}
   typingTimer = setTimeout(clearTyping, 3000);
 };
 
 async function clearTyping() {
   clearTimeout(typingTimer);
-  try { lsSetTyping(currentWho, 0); } catch {}
+  try { fsSetTyping(currentWho, 0); } catch {}
 }
 
 window.autoGrow = (el) => { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; };
