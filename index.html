@@ -409,9 +409,9 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <img id="lightbox-img" src="" alt="Photo" />
 </div>
 
-<script type="module">
-// localStorage helpers
-function lsGetEntries(){return JSON.parse(localStorage.getItem('diary_entries')||'[]').sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));}function lsAddEntry(e){const arr=lsGetEntries();e.id=Date.now().toString(36)+Math.random().toString(36).slice(2);arr.unshift(e);localStorage.setItem('diary_entries',JSON.stringify(arr));}function lsDeleteEntry(id){localStorage.setItem('diary_entries',JSON.stringify(lsGetEntries().filter(e=>e.id!==id)));}function lsGetMsgs(){return JSON.parse(localStorage.getItem('diary_chat')||'[]');}function lsSendMsg(m){const arr=lsGetMsgs();m.id=Date.now().toString(36)+Math.random().toString(36).slice(2);arr.push(m);localStorage.setItem('diary_chat',JSON.stringify(arr));}function lsUpdateMsgReactions(id,reacts){const arr=lsGetMsgs();const i=arr.findIndex(m=>m.id===id);if(i>=0){arr[i].reactions=reacts;localStorage.setItem('diary_chat',JSON.stringify(arr));}}function lsSetTyping(who,val){const t=JSON.parse(localStorage.getItem('diary_typing')||'{}');t[who]=val;localStorage.setItem('diary_typing',JSON.stringify(t));}
+<script type="module">import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';import{getFirestore,collection,doc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,query,orderBy,serverTimestamp,getDoc}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+// Firestore helper functions
+async function fsAddEntry(e){e.createdAt=new Date().toISOString();await addDoc(collection(db,'entries'),e);}async function fsDeleteEntry(id){await deleteDoc(doc(db,'entries',id));}async function fsSendMsg(m){m.timestamp=serverTimestamp();await addDoc(collection(db,'messages'),m);}async function fsUpdateMsgReactions(id,reacts){await updateDoc(doc(db,'messages',id),{reactions:reacts});}async function fsSetTyping(who,val){await setDoc(doc(db,'typing',who),{active:val,timestamp:serverTimestamp()},{merge:true});}async function fsGetSettings(){const d=await getDoc(doc(db,'settings','shared'));return d.exists()?d.data():{};}async function fsSetSetting(key,val){await setDoc(doc(db,'settings','shared'),{[key]:val},{merge:true});}
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
 const firebaseConfig = {
@@ -428,8 +428,8 @@ const firebaseConfig = {
 const DEFAULT_PASSWORD = 'Sardorbek&Dilnoza';
 // ──────────────────────────────────────────────────────────────────────────────
 
-// using localStorage - no Firebase needed
-// using localStorage - no db needed
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);
+// Firestore is initialized above
 
 let currentWho = '';
 let entries = [];
@@ -476,7 +476,7 @@ const savedCover = localStorage.getItem('cover_photo');
 if (savedCover) applyCover(savedCover);
 
 // ── AUTH (simple password) ────────────────────────────────────────────────────
-function getPassword() { return localStorage.getItem('diary_password') || DEFAULT_PASSWORD; }
+async function getPassword(){const s=await fsGetSettings();return s.password||DEFAULT_PASSWORD;}
 
 window.selectWho = (who) => {
   currentWho = who;
@@ -487,7 +487,7 @@ window.selectWho = (who) => {
 window.unlock = () => {
   if (!currentWho) { showError('Please choose who you are 💕'); return; }
   const pass = document.getElementById('auth-pass').value;
-  if (pass !== getPassword()) { showError('Wrong password, try again 🔒'); return; }
+  if (pass !== await getPassword()) { showError('Wrong password, try again 🔒'); return; }
   sessionStorage.setItem('diary_who', currentWho);
   openApp();
 };
@@ -520,14 +520,14 @@ window.lockDiary = () => {
   currentWho = '';
 };
 
-window.changePassword = () => {
+window.changePassword = async () => {
   const cur = document.getElementById('pw-current').value;
   const nw = document.getElementById('pw-new').value;
   const conf = document.getElementById('pw-confirm').value;
-  if (cur !== getPassword()) { toast('Current password is wrong'); return; }
+  if (cur !== await getPassword()) { toast('Current password is wrong'); return; }
   if (!nw || nw.length < 4) { toast('New password must be at least 4 characters'); return; }
   if (nw !== conf) { toast("Passwords don't match"); return; }
-  localStorage.setItem('diary_password', nw);
+      await fsSetSetting('password', nw);
   document.getElementById('pw-current').value = '';
   document.getElementById('pw-new').value = '';
   document.getElementById('pw-confirm').value = '';
@@ -617,7 +617,7 @@ async function loadEntries() {
   try {
     // localStorage
     // done
-    entries = lsGetEntries(); renderEntries();
+    const snap=await new Promise(r=>onSnapshot(query(collection(db,'entries'),orderBy('createdAt','desc')),r));entries=snap.docs.map(d=>({...d.data(),id:d.id}));renderEntries();
   } catch(e) { entries=[]; }
 }
 
@@ -693,7 +693,7 @@ window.saveImgbbKey = () => {
 };
 
 async function uploadToImgbb(file) {
-  const key = getImgbbKey();
+  const key = await getImgbbKey();
   if (!key) throw new Error('No ImgBB API key — add it in Settings');
   const form = new FormData();
   form.append('image', file);
@@ -707,14 +707,16 @@ async function uploadToImgbb(file) {
 setTimeout(() => {
   const el = document.getElementById('cfg-imgbb');
   if (el) {
-    const k = getImgbbKey();
+    const k = await getImgbbKey();
     el.value = k;
     if (k) document.getElementById('imgbb-status').textContent = '✅ Key saved';
   }
 }, 400);
 
 
-// ── CHAT ─────────────────────────────────────────────────────────────────────
+// ── MESSAGES ──────────────────────────────────────────
+  async function loadMessages(){const snap=await new Promise(r=>onSnapshot(query(collection(db,'messages'),orderBy('timestamp')),r));const msgs=snap.docs.map(d=>({...d.data(),id:d.id}));renderChat(msgs);}
+  // ── CHAT ──
 let chatUnsub = null;
 let typingTimer = null;
 const REACTIONS = ['❤️','😂','😮','😢','👍'];
@@ -767,7 +769,7 @@ window.sendMessage = async () => {
   if (!text) return;
   inp.value = ''; inp.style.height = '';
   clearTyping();
-  lsSendMsg({text, photoUrl:null, author:currentWho, reactions:[], createdAt:new Date().toISOString()}); renderChat(lsGetMsgs());
+  await fsSendMsg({text, photoUrl:null, author:currentWho, reactions:[]}); const snap2=await new Promise(r=>onSnapshot(query(collection(db,'messages'),orderBy('timestamp')),r)); renderChat(snap2.docs.map(d=>({...d.data(),id:d.id})));
 };
 
 window.sendChatPhoto = async (input) => {
