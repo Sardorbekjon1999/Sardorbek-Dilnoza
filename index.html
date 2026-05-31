@@ -617,7 +617,7 @@ async function loadEntries() {
   try {
     // localStorage
     // done
-    entries = lsGetEntries();
+    entries = lsGetEntries(); renderEntries();
   } catch(e) { entries=[]; }
 }
 
