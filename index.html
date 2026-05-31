@@ -767,7 +767,7 @@ window.sendMessage = async () => {
   if (!text) return;
   inp.value = ''; inp.style.height = '';
   clearTyping();
-  lsSendMsg({text, photoUrl:null, author:currentWho, reactions:[], createdAt:new Date().toISOString()}); renderChat(lsGetMsgs());, author:currentWho, reactions:[], createdAt:new Date().toISOString()});
+  lsSendMsg({text, photoUrl:null, author:currentWho, reactions:[], createdAt:new Date().toISOString()}); renderChat(lsGetMsgs());
 };
 
 window.sendChatPhoto = async (input) => {
