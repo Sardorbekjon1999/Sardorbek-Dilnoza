@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sardorbek & Dilnoza's Diary ð</title>
+<title>Sardorbek & Dilnoza's Diary 💕</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
 :root {
@@ -96,7 +96,7 @@ body.has-cover > * { position: relative; z-index: 1; }
 
 /* TABS */
 .tabs { display: flex; gap: 6px; margin-bottom: 1.5rem; background: rgba(245,237,224,0.85); padding: 4px; border-radius: 12px; }
-.tab { flex: 1; padding: 0.55rem; text-align: center; font-size: 0.85rem; font-weight: 500; color: var(--muted); background: none; border: none; border-radius: 9px; cursor: pointer; transition: all 0.2s; }
+.tab { flex: 1; padding: 0.55rem 0.4rem; text-align: center; font-size: 0.82rem; font-weight: 500; color: var(--muted); background: none; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
 .tab.active { background: white; color: var(--rose); box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
 
 /* SECTIONS */
@@ -212,7 +212,7 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 
 @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
 
-/* ââ CHAT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+/* ── CHAT ───────────────────────────────────────────────────────────────────── */
 .chat-wrap { display:flex; flex-direction:column; height:calc(100vh - 260px); min-height:400px; background:rgba(255,255,255,0.93); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
 .chat-messages { flex:1; overflow-y:auto; padding:1.25rem; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
 .chat-messages::-webkit-scrollbar { width:4px; }
@@ -241,6 +241,33 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 .react-row { display:flex; gap:4px; margin-top:3px; flex-wrap:wrap; }
 .react-btn { background:rgba(255,255,255,0.8); border:1px solid var(--border); border-radius:999px; padding:1px 7px; font-size:0.75rem; cursor:pointer; transition:background 0.15s; }
 .react-btn:hover { background:var(--warm); }
+
+/* ── MUSIC PLAYER ─────────────────────────────────────── */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.music-open { padding-bottom: 130px !important; }
+
+/* ── PHOTO EDITOR ─────────────────────────────────────── */
+#photo-editor-modal { animation: fadeInUp 0.25s ease; }
+.photo-editor-canvas { max-width: 100%; max-height: 340px; border-radius: 10px; display: block; margin: 0 auto; border: 1px solid var(--border); }
+.photo-edit-btn { padding: 6px 14px; border-radius: 8px; border: none; background: var(--blush); color: white; font-size: 0.8rem; cursor: pointer; font-family: var(--sans); transition: opacity 0.15s; }
+.photo-edit-btn:hover { opacity: 0.85; }
+.photo-edit-btn.active { background: var(--rose); }
+
+/* ── IMPROVED GLOBAL STYLES ───────────────────────────── */
+.tab { transition: background 0.2s, color 0.2s; font-size: 0.82rem; }
+.tab:hover { background: rgba(179,108,155,0.12) !important; }
+.tab.active { background: white !important; color: var(--rose) !important; font-weight: 600; }
+.msg-bubble { box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.entry-card { transition: box-shadow 0.2s, transform 0.2s; }
+.entry-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.detail-song { background: linear-gradient(135deg, rgba(179,108,155,0.08), rgba(123,172,212,0.08)); border: 1px solid rgba(179,108,155,0.2); }
+.edit-btn { transition: background 0.15s; }
+.edit-btn:hover { background: var(--blush) !important; color: white !important; }
+.photo-thumb { position: relative; border-radius: 8px; overflow: hidden; }
+.photo-thumb img { width: 80px; height: 80px; object-fit: cover; display: block; border-radius: 8px; }
+.photo-thumb .rm { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(0,0,0,0.6); color: white; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.photo-thumb .edit-photo-btn { position: absolute; bottom: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; border: none; background: rgba(179,108,155,0.85); color: white; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 </style>
 </head>
 <body>
@@ -251,16 +278,16 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 <!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-card">
-    <div class="auth-icon">ð</div>
+    <div class="auth-icon">💕</div>
     <h1>Sardorbek & Dilnoza's Diary</h1>
     <p>Who's writing today?</p>
     <div class="who-row">
-      <button class="who-btn" id="who-s" onclick="selectWho('Sardorbek')">ð§ Sardorbek</button>
-      <button class="who-btn" id="who-d" onclick="selectWho('Dilnoza')">ð© Dilnoza</button>
+      <button class="who-btn" id="who-s" onclick="selectWho('Sardorbek')">🧔 Sardorbek</button>
+      <button class="who-btn" id="who-d" onclick="selectWho('Dilnoza')">👩 Dilnoza</button>
     </div>
     <div class="auth-error" id="auth-error"></div>
-    <input class="auth-input" type="password" id="auth-pass" placeholder="â¢ â¢ â¢ â¢ â¢ â¢" />
-    <button class="btn-primary" onclick="unlock()">Open diary ð</button>
+    <input class="auth-input" type="password" id="auth-pass" placeholder="• • • • • •" />
+    <button class="btn-primary" onclick="unlock()">Open diary 💕</button>
     <p class="auth-hint">Enter your shared password</p>
   </div>
 </div>
@@ -270,28 +297,28 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="header-banner" id="header-banner" onclick="triggerCoverPick()">
     <img id="banner-img" src="" alt="Cover photo" />
     <div class="header-banner-overlay">
-      <span class="header-banner-title">ð Sardorbek & Dilnoza's Diary</span>
+      <span class="header-banner-title">💕 Sardorbek & Dilnoza's Diary</span>
     </div>
-    <button class="header-banner-change" onclick="event.stopPropagation();triggerCoverPick()">ð· Change</button>
+    <button class="header-banner-change" onclick="event.stopPropagation();triggerCoverPick()">📷 Change</button>
   </div>
 
   <div class="header">
     <div class="header-left">
-      <h1>ð Sardorbek & Dilnoza</h1>
+      <h1>💕 Sardorbek & Dilnoza</h1>
       <p id="header-date"></p>
     </div>
     <div class="header-right">
-      <div class="who-badge" id="who-badge">â</div>
-      <button class="lock-btn" onclick="lockDiary()" title="Lock diary">ð</button>
+      <div class="who-badge" id="who-badge">—</div>
+      <button class="lock-btn" onclick="lockDiary()" title="Lock diary">🔒</button>
     </div>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('write',this)">âï¸ Write</button>
-    <button class="tab" onclick="switchTab('browse',this)">ð Entries</button>
-    <button class="tab" onclick="switchTab('chat',this)" id="tab-chat">ð¬ Chat</button>
-    <button class="tab" onclick="switchTab('settings',this)">âï¸ Settings</button>
-    <button class="tab" onclick="toggleMusicPlayer()" id="tab-music">🎵 Music</button>
+    <button class="tab active" onclick="switchTab('write',this)">✏️ Write</button>
+    <button class="tab" onclick="switchTab('browse',this)">📖 Entries</button>
+    <button class="tab" onclick="switchTab('chat',this)" id="tab-chat">💬 Chat</button>
+    <button class="tab" onclick="switchTab('settings',this)">⚙️ Settings</button>
+    <button class="tab" onclick="toggleMusicPlayer()" id="tab-music"><🎵 Music</button>
   </div>
 
   <!-- WRITE -->
@@ -300,12 +327,12 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
       <div style="margin-bottom:1rem">
         <label style="margin-bottom:6px;display:block">How are you feeling?</label>
         <div class="mood-row">
-          <button class="mood-pill" onclick="setMood(this,'ð','happy')">ð Happy</button>
-          <button class="mood-pill" onclick="setMood(this,'ð¥°','in love')">ð¥° In love</button>
-          <button class="mood-pill" onclick="setMood(this,'ð','peaceful')">ð Peaceful</button>
-          <button class="mood-pill" onclick="setMood(this,'ð','excited')">ð Excited</button>
-          <button class="mood-pill" onclick="setMood(this,'ð¥º','emotional')">ð¥º Emotional</button>
-          <button class="mood-pill" onclick="setMood(this,'ð','melancholy')">ð Melancholy</button>
+          <button class="mood-pill" onclick="setMood(this,'😊','happy')">😊 Happy</button>
+          <button class="mood-pill" onclick="setMood(this,'🥰','in love')">🥰 In love</button>
+          <button class="mood-pill" onclick="setMood(this,'😌','peaceful')">😌 Peaceful</button>
+          <button class="mood-pill" onclick="setMood(this,'😄','excited')">😄 Excited</button>
+          <button class="mood-pill" onclick="setMood(this,'🥺','emotional')">🥺 Emotional</button>
+          <button class="mood-pill" onclick="setMood(this,'😔','melancholy')">😔 Melancholy</button>
         </div>
       </div>
       <div class="field-row">
@@ -316,22 +343,22 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
         <label>Your entry</label>
         <textarea id="e-body" placeholder="Write about your day, a feeling, a memory you want to keep forever..."></textarea>
       </div>
-      <label>ðµ SONG OF THE DAY</label><input type="text" id="e-song" placeholder="What song describes this moment?" style="margin-bottom:10px" /><label>PHOTOS</label>
+      <label>🎵 SONG OF THE DAY</label><input type="text" id="e-song" placeholder="What song describes this moment?" style="margin-bottom:10px" /><label>PHOTOS</label>
       <div class="photo-zone" onclick="document.getElementById('photo-input').click()">
         <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)" />
-        <div class="photo-zone-text" id="photo-zone-text">ð· Tap to add photos</div>
+        <div class="photo-zone-text" id="photo-zone-text">📷 Tap to add photos</div>
       </div>
       <div class="photo-preview-grid" id="photo-preview"></div>
       <label style="margin-top:10px;display:block">Tags</label>
       <div class="tag-row">
-        <span class="tag-chip" onclick="toggleTag(this,'date night')">ð Date night</span>
-        <span class="tag-chip" onclick="toggleTag(this,'travel')">âï¸ Travel</span>
-        <span class="tag-chip" onclick="toggleTag(this,'milestone')">ð Milestone</span>
-        <span class="tag-chip" onclick="toggleTag(this,'first time')">â­ First time</span>
-        <span class="tag-chip" onclick="toggleTag(this,'everyday')">âï¸ Everyday</span>
-        <span class="tag-chip" onclick="toggleTag(this,'memory')">ð· Memory</span>
+        <span class="tag-chip" onclick="toggleTag(this,'date night')">🌙 Date night</span>
+        <span class="tag-chip" onclick="toggleTag(this,'travel')">✈️ Travel</span>
+        <span class="tag-chip" onclick="toggleTag(this,'milestone')">🎉 Milestone</span>
+        <span class="tag-chip" onclick="toggleTag(this,'first time')">⭐ First time</span>
+        <span class="tag-chip" onclick="toggleTag(this,'everyday')">☀️ Everyday</span>
+        <span class="tag-chip" onclick="toggleTag(this,'memory')">📷 Memory</span>
       </div>
-      <button class="save-btn" id="save-btn" onclick="saveEntry()">Save entry ð</button>
+      <button class="save-btn" id="save-btn" onclick="saveEntry()">Save entry 💕</button>
     </div>
   </div>
 
@@ -340,14 +367,14 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
     <div class="stats">
       <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Entries</div></div>
       <div class="stat"><div class="stat-num" id="s-streak">0</div><div class="stat-lbl">Day streak</div></div>
-      <div class="stat"><div class="stat-num" id="s-mood">â</div><div class="stat-lbl">Top mood</div></div>
+      <div class="stat"><div class="stat-num" id="s-mood">—</div><div class="stat-lbl">Top mood</div></div>
     </div>
     <div id="entry-list"></div>
   </div>
 
   <!-- DETAIL -->
   <div class="section" id="sec-detail">
-    <button class="detail-back" onclick="switchTab('browse',document.querySelector('.tab:nth-child(2)'))">â Back to entries</button>
+    <button class="detail-back" onclick="switchTab('browse',document.querySelector('.tab:nth-child(2)'))">← Back to entries</button>
     <div class="detail-card" id="detail-inner"></div>
   </div>
 
@@ -355,30 +382,30 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="section" id="sec-settings">
 
     <div class="settings-card">
-      <h3>ð¼ Cover photo</h3>
+      <h3>🖼 Cover photo</h3>
       <p class="settings-note">This photo appears as the full background, header banner and on the lock screen. Only you two will see it.</p>
       <div class="cover-preview" id="cover-preview" onclick="triggerCoverPick()">
         <img id="cover-preview-img" src="" alt="Cover" />
-        <span class="cover-preview-label" id="cover-preview-label">ð· Tap to choose a photo</span>
+        <span class="cover-preview-label" id="cover-preview-label">📷 Tap to choose a photo</span>
       </div>
       <input type="file" id="cover-input" accept="image/*" style="display:none" onchange="handleCoverPhoto(this)" />
       <div class="cover-actions">
-        <button class="cover-action-btn" onclick="triggerCoverPick()">ð· Choose photo</button>
-        <button class="cover-action-btn" onclick="removeCover()">â Remove</button>
+        <button class="cover-action-btn" onclick="triggerCoverPick()">📷 Choose photo</button>
+        <button class="cover-action-btn" onclick="removeCover()">✕ Remove</button>
       </div>
     </div>
 
 
     <div class="settings-card">
-      <h3>ð¼ï¸ ImgBB photo storage</h3>
-      <p class="settings-note">Photos are uploaded to ImgBB (free, unlimited). Get your free API key at <strong>imgbb.com</strong> â Account â API.</p>
+      <h3>🖼️ ImgBB photo storage</h3>
+      <p class="settings-note">Photos are uploaded to ImgBB (free, unlimited). Get your free API key at <strong>imgbb.com</strong> → Account → API.</p>
       <div class="setting-row"><label>ImgBB API Key</label><input type="text" id="cfg-imgbb" placeholder="Paste your ImgBB API key here" /></div>
       <button class="settings-save" onclick="saveImgbbKey()">Save key</button>
       <div id="imgbb-status" style="font-size:0.8rem;color:var(--muted);margin-top:6px;"></div>
     </div>
 
     <div class="settings-card">
-      <h3>ð Shared password</h3>
+      <h3>🔑 Shared password</h3>
       <p class="settings-note">Change the password you both use to open the diary. Make sure to tell your partner!</p>
       <div class="setting-row"><label>Current password</label><input type="password" id="pw-current" placeholder="Current password" /></div>
       <div class="setting-row"><label>New password</label><input type="password" id="pw-new" placeholder="New password" /></div>
@@ -393,16 +420,16 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="section" id="sec-chat">
     <div class="chat-wrap">
       <div class="chat-messages" id="chat-messages">
-        <div class="chat-empty"><span>ð¬</span>No messages yet.<br>Say something sweet ð</div>
+        <div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>
       </div>
       <div class="chat-typing" id="chat-typing"></div>
       <div class="chat-input-row">
-        <button class="chat-photo-btn" onclick="document.getElementById('chat-photo-input').click()" title="Send photo">ð·</button>
+        <button class="chat-photo-btn" onclick="document.getElementById('chat-photo-input').click()" title="Send photo">📷</button>
         <input type="file" id="chat-photo-input" accept="image/*" style="display:none" onchange="sendChatPhoto(this)" />
         <textarea class="chat-input" id="chat-input" placeholder="Write a message..." rows="1"
           oninput="chatTyping();autoGrow(this)"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
-        <button class="chat-send-btn" onclick="sendMessage()">â¤</button>
+        <button class="chat-send-btn" onclick="sendMessage()">➤</button>
       </div>
     </div>
   </div>
@@ -412,56 +439,93 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 <!-- EDIT ENTRY MODAL -->
 <div id="edit-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;overflow-y:auto;">
   <div style="background:white;max-width:600px;margin:40px auto;padding:24px;border-radius:16px;">
-    <h3 style="font-family:var(--serif);margin-bottom:16px;">✏️ Edit Memory</h3>
+    <h3 style="font-family:var(--serif);margin-bottom:16px;"> Edit Memory</h3>
     <input type="hidden" id="edit-entry-id" />
     <label style="display:block;margin-bottom:6px;font-size:0.85rem;">Title</label>
     <input type="text" id="edit-title" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--sans);" />
     <label style="display:block;margin-bottom:6px;font-size:0.85rem;">Memory</label>
     <textarea id="edit-body" rows="6" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--serif);resize:vertical;"></textarea>
-    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">🎵 Song / Music Link</label>
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;"><🎵 Song / Music Link</label>
     <input type="text" id="edit-song" placeholder="Paste Spotify, YouTube, or any music link..." style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--sans);" />
-    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">📍 Location</label>
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">=📍 Location</label>
     <input type="text" id="edit-location" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:16px;font-family:var(--sans);" />
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button onclick="closeEditModal()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--sans);">Cancel</button>
-      <button onclick="saveEditEntry()" style="padding:8px 18px;border-radius:8px;border:none;background:var(--rose);color:white;cursor:pointer;font-family:var(--sans);">Save Changes 💾</button>
+      <button onclick="saveEditEntry()" style="padding:8px 18px;border-radius:8px;border:none;background:var(--rose);color:white;cursor:pointer;font-family:var(--sans);">Save Changes =💾</button>
     </div>
   </div>
 </div>
 
 <!-- MUSIC PLAYER -->
-<div id="music-player" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;background:white;border-radius:16px;padding:12px 18px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:300px;max-width:420px;width:90%;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="font-size:1.2rem;">🎵</span>
-    <div style="flex:1;min-width:0;">
-      <div id="music-title" style="font-size:0.82rem;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Now Playing</div>
-      <div id="music-url-display" style="font-size:0.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#f8e8f0,#e8f0f8);border-top:2px solid rgba(179,108,155,0.3);padding:12px 16px;box-shadow:0 -4px 24px rgba(0,0,0,0.12);">
+  <div style="max-width:700px;margin:0 auto;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+      <div id="music-disc" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#b36c9b,#7bacd4);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:transform 0.3s;">🎵</div>
+      <div style="flex:1;min-width:0;">
+        <div id="music-title" style="font-size:0.82rem;font-weight:700;color:#3f3f40;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'DM Sans',sans-serif;">No track loaded</div>
+        <div id="music-url-display" style="font-size:0.7rem;color:#8291a1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'DM Sans',sans-serif;"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <button id="music-play-btn" onclick="toggleMusicPlay()" style="background:linear-gradient(135deg,#b36c9b,#c97dae);border:none;border-radius:50%;width:38px;height:38px;color:white;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(179,108,155,0.4);">▶</button>
+        <button onclick="closeMusicPlayer()" style="background:rgba(130,145,161,0.15);border:none;border-radius:50%;width:30px;height:30px;color:#8291a1;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+      </div>
     </div>
-    <button onclick="closeMusicPlayer()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--muted);">✕</button>
-  </div>
-  <div style="display:flex;align-items:center;gap:8px;">
-    <input type="range" id="music-progress" value="0" min="0" max="100" step="1" style="flex:1;accent-color:var(--rose);" oninput="seekMusic(this.value)" />
-    <span id="music-time" style="font-size:0.72rem;color:var(--muted);white-space:nowrap;">0:00</span>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
-    <div style="display:flex;gap:8px;align-items:center;">
-      <button id="music-play-btn" onclick="toggleMusicPlay()" style="background:var(--rose);border:none;border-radius:50%;width:36px;height:36px;color:white;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">▶</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <span id="music-cur-time" style="font-size:0.7rem;color:#8291a1;min-width:30px;font-family:'DM Sans',sans-serif;">0:00</span>
+      <input type="range" id="music-progress" value="0" min="0" max="100" step="0.1" style="flex:1;accent-color:#b36c9b;height:4px;cursor:pointer;" oninput="seekMusic(this.value)" />
+      <span id="music-dur-time" style="font-size:0.7rem;color:#8291a1;min-width:30px;text-align:right;font-family:'DM Sans',sans-serif;">0:00</span>
+      <span style="font-size:0.7rem;color:#8291a1;font-family:'DM Sans',sans-serif;">🔊</span>
+      <input type="range" id="music-volume" value="80" min="0" max="100" step="1" style="width:60px;accent-color:#b36c9b;cursor:pointer;" oninput="setMusicVolume(this.value)" />
     </div>
-    <div style="display:flex;align-items:center;gap:6px;">
-      <span style="font-size:0.75rem;color:var(--muted);">Vol</span>
-      <input type="range" id="music-volume" value="80" min="0" max="100" step="1" style="width:70px;accent-color:var(--rose);" oninput="setMusicVolume(this.value)" />
+    <div style="display:flex;gap:6px;align-items:center;">
+      <input type="text" id="music-url-input" placeholder="🔗 Paste a direct audio URL (mp3, ogg, wav...)" style="flex:1;padding:7px 12px;border:1.5px solid rgba(179,108,155,0.3);border-radius:20px;font-size:0.78rem;font-family:'DM Sans',sans-serif;background:white;outline:none;" />
+      <button onclick="loadMusicUrl()" style="padding:7px 14px;background:linear-gradient(135deg,#b36c9b,#c97dae);color:white;border:none;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'DM Sans',sans-serif;white-space:nowrap;">▶ URL</button>
+      <label style="padding:7px 14px;background:linear-gradient(135deg,#7bacd4,#8cc0e8);color:white;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'DM Sans',sans-serif;white-space:nowrap;">📁 Device<input type="file" id="music-file-input" accept="audio/*" style="display:none;" onchange="loadMusicFile(this)"></label>
     </div>
-  </div>
-  <div id="music-input-row" style="margin-top:10px;display:flex;gap:6px;">
-    <input type="text" id="music-url-input" placeholder="Paste a direct audio URL (mp3, ogg...)" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;font-family:var(--sans);" />
-    <button onclick="loadMusicUrl()" style="padding:6px 12px;background:var(--rose);color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.8rem;">Play</button>
   </div>
 </div>
-<audio id="music-audio"></audio>
+<audio id="music-audio" crossorigin="anonymous"></audio>
+
+<!-- PHOTO EDITOR MODAL -->
+<div id="photo-editor-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;overflow-y:auto;padding:20px;">
+  <div style="background:white;max-width:580px;margin:0 auto;padding:20px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3 style="font-family:var(--serif);color:var(--ink);margin:0;font-size:1.1rem;">✏️ Edit Photo</h3>
+      <button onclick="closePhotoEditor()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <canvas id="photo-editor-canvas" class="photo-editor-canvas"></canvas>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center;">
+      <button class="photo-edit-btn" onclick="photoRotate(-90)">↺ Rotate L</button>
+      <button class="photo-edit-btn" onclick="photoRotate(90)">↻ Rotate R</button>
+      <button class="photo-edit-btn" onclick="photoFlip('h')">↔ Flip H</button>
+      <button class="photo-edit-btn" onclick="photoFlip('v')">↕ Flip V</button>
+    </div>
+    <div style="margin-top:12px;">
+      <label style="font-size:0.8rem;color:var(--muted);display:block;margin-bottom:4px;">💡 Brightness</label>
+      <input type="range" id="photo-brightness" min="-100" max="100" value="0" style="width:100%;accent-color:var(--rose);" oninput="applyPhotoFilters()">
+      <label style="font-size:0.8rem;color:var(--muted);display:block;margin:8px 0 4px;">🎨 Contrast</label>
+      <input type="range" id="photo-contrast" min="-100" max="100" value="0" style="width:100%;accent-color:var(--rose);" oninput="applyPhotoFilters()">
+      <label style="font-size:0.8rem;color:var(--muted);display:block;margin:8px 0 4px;">🌈 Saturation</label>
+      <input type="range" id="photo-saturation" min="-100" max="100" value="0" style="width:100%;accent-color:var(--rose);" oninput="applyPhotoFilters()">
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
+      <button class="photo-edit-btn" onclick="applyFilter('none')" id="filter-none">Original</button>
+      <button class="photo-edit-btn" onclick="applyFilter('grayscale')">B&W</button>
+      <button class="photo-edit-btn" onclick="applyFilter('sepia')">Sepia</button>
+      <button class="photo-edit-btn" onclick="applyFilter('warm')">Warm</button>
+      <button class="photo-edit-btn" onclick="applyFilter('cool')">Cool</button>
+      <button class="photo-edit-btn" onclick="applyFilter('vivid')">Vivid</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+      <button onclick="resetPhotoEdit()" style="padding:8px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--sans);font-size:0.85rem;">Reset</button>
+      <button onclick="savePhotoEdit()" style="padding:8px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--rose),#c97dae);color:white;cursor:pointer;font-family:var(--sans);font-size:0.85rem;font-weight:600;">Save Changes 💾</button>
+    </div>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">â</button>
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="Photo" />
 </div>
 
@@ -469,7 +533,7 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 // Firestore helper functions
 async function fsAddEntry(e){e.createdAt=new Date().toISOString();await addDoc(collection(db,'entries'),e);}async function fsDeleteEntry(id){await deleteDoc(doc(db,'entries',id));}async function fsSendMsg(m){m.timestamp=serverTimestamp();await addDoc(collection(db,'messages'),m);}async function fsUpdateMsgReactions(id,reacts){await updateDoc(doc(db,'messages',id),{reactions:reacts});}async function fsSetTyping(who,val){await setDoc(doc(db,'typing',who),{active:val,timestamp:serverTimestamp()},{merge:true});}async function fsGetSettings(){const d=await getDoc(doc(db,'settings','shared'));return d.exists()?d.data():{};}async function fsSetSetting(key,val){await setDoc(doc(db,'settings','shared'),{[key]:val},{merge:true});}
 
-// âââ FIREBASE CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyB72k3TX8hBQ5DUUdF5nzZNLYYNDjWniZE",
   authDomain: "our-diary-5c4d2.firebaseapp.com",
@@ -478,11 +542,11 @@ const firebaseConfig = {
   messagingSenderId: "951371710948",
   appId: "1:951371710948:web:ce73f8523d2ee4a23a07f1"
 };
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──────────────────────────────────────────────────────────────────────────────
 
-// âââ SET YOUR SHARED PASSWORD HERE (change before deploying!) âââââââââââââââââ
+// ─── SET YOUR SHARED PASSWORD HERE (change before deploying!) ─────────────────
 const DEFAULT_PASSWORD = 'Sardorbek&Dilnoza';
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──────────────────────────────────────────────────────────────────────────────
 
 const app=initializeApp(firebaseConfig);const db=getFirestore(app);
 // Firestore is initialized above
@@ -494,7 +558,7 @@ let selectedMoodEmoji = '';
 let selectedTags = [];
 let photoFiles = [];
 
-// ââ COVER PHOTO âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── COVER PHOTO ───────────────────────────────────────────────────────────────
 function applyCover(dataUrl) {
   if (!dataUrl) return;
   document.body.style.backgroundImage = `url('${dataUrl}')`;
@@ -504,7 +568,7 @@ function applyCover(dataUrl) {
   const prevImg = document.getElementById('cover-preview-img');
   prevImg.src = dataUrl; prevImg.classList.add('on');
   document.getElementById('cover-preview').classList.add('has-img');
-  document.getElementById('cover-preview-label').textContent = 'ð· Change photo';
+  document.getElementById('cover-preview-label').textContent = '📷 Change photo';
 }
 
 window.removeCover = () => {
@@ -515,7 +579,7 @@ window.removeCover = () => {
   document.getElementById('banner-img').src = '';
   document.getElementById('cover-preview').classList.remove('has-img');
   document.getElementById('cover-preview-img').classList.remove('on');
-  document.getElementById('cover-preview-label').textContent = 'ð· Tap to choose a photo';
+  document.getElementById('cover-preview-label').textContent = '📷 Tap to choose a photo';
   toast('Cover photo removed');
 };
 
@@ -533,7 +597,7 @@ window.handleCoverPhoto = async (input) => {
 };
 
 
-// ââ AUTH (simple password) ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── AUTH (simple password) ────────────────────────────────────────────────────
 async function getPassword(){const s=await fsGetSettings();return s.password||DEFAULT_PASSWORD;}
 
 window.selectWho = (who) => {
@@ -543,9 +607,9 @@ window.selectWho = (who) => {
 };
 
 window.unlock = async () => {
-  if (!currentWho) { showError('Please choose who you are ð'); return; }
+  if (!currentWho) { showError('Please choose who you are 💕'); return; }
   const pass = document.getElementById('auth-pass').value;
-  if (pass !== await getPassword()) { showError('Wrong password, try again ð'); return; }
+  if (pass !== await getPassword()) { showError('Wrong password, try again 🔒'); return; }
   sessionStorage.setItem('diary_who', currentWho);
   openApp();
 };
@@ -562,7 +626,7 @@ function openApp() {
   currentWho = who;
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('who-badge').textContent = who === 'Sardorbek' ? 'ð§ Sardorbek' : 'ð© Dilnoza';
+  document.getElementById('who-badge').textContent = who === 'Sardorbek' ? '🧔 Sardorbek' : '👩 Dilnoza';
   document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   loadSettings();
   loadEntries();
@@ -589,13 +653,13 @@ window.changePassword = async () => {
   document.getElementById('pw-current').value = '';
   document.getElementById('pw-new').value = '';
   document.getElementById('pw-confirm').value = '';
-  toast('Password updated! Tell your partner ð');
+  toast('Password updated! Tell your partner 💕');
 };
 
 // Auto-open if session still active
 if (sessionStorage.getItem('diary_who')) openApp();
 
-// ââ TABS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── TABS ──────────────────────────────────────────────────────────────────────
 window.switchTab = (name, btn) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
@@ -604,7 +668,7 @@ window.switchTab = (name, btn) => {
   if (name === 'browse') renderEntries();
 };
 
-// ââ WRITE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── WRITE ─────────────────────────────────────────────────────────────────────
 window.setMood = (btn, emoji, label) => {
   document.querySelectorAll('.mood-pill').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
@@ -629,7 +693,7 @@ function renderPreviews() {
   photoFiles.forEach((f,i) => {
     const div = document.createElement('div');
     div.className = 'photo-thumb';
-    div.innerHTML = `<img src="${URL.createObjectURL(f)}" /><button class="rm" onclick="removePhoto(${i})">â</button>`;
+    div.innerHTML = `<img src="${URL.createObjectURL(f)}" /><button class="rm" onclick="removePhoto(${i})">✕</button><button class="edit-photo-btn" onclick="openPhotoEditor(${i})" title="Edit photo">✏</button>`;
     grid.appendChild(div);
   });
 }
@@ -639,7 +703,7 @@ window.saveEntry = async () => {
   const title = document.getElementById('e-title').value.trim();
   const body = document.getElementById('e-body').value.trim();
   const loc = document.getElementById('e-loc').value.trim();
-  if (!body) { toast('Write something first ð'); return; }
+  if (!body) { toast('Write something first 💕'); return; }
   const btn = document.getElementById('save-btn');
   btn.disabled = true; btn.textContent = 'Saving...';
   showLoader(true);
@@ -664,15 +728,15 @@ window.saveEntry = async () => {
     document.getElementById('photo-preview').innerHTML='';
     document.getElementById('photo-input').value='';
     photoFiles=[]; selectedMood=''; selectedMoodEmoji=''; selectedTags=[];
-    toast('Entry saved! ð');
+    toast('Entry saved! 💕');
     switchTab('browse', document.querySelector('.tab:nth-child(2)'));
     await loadEntries();
   } catch(e) { toast('Error: '+e.message); }
-  btn.disabled=false; btn.textContent='Save entry ð';
+  btn.disabled=false; btn.textContent='Save entry 💕';
   showLoader(false);
 };
 
-// ââ ENTRIES âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── ENTRIES ───────────────────────────────────────────────────────────────────
 async function loadEntries() {
   try {
     // localStorage
@@ -687,19 +751,19 @@ function renderEntries() {
   const moodCount={};
   entries.forEach(e=>{ if(e.moodEmoji) moodCount[e.moodEmoji]=(moodCount[e.moodEmoji]||0)+1; });
   const topMood = Object.entries(moodCount).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('s-mood').textContent = topMood ? topMood[0] : 'â';
+  document.getElementById('s-mood').textContent = topMood ? topMood[0] : '—';
   const dates=[...new Set(entries.map(e=>e.createdAt?.toDate?e.createdAt.toDate().toISOString().slice(0,10):''))];
   let streak=0, check=new Date().toISOString().slice(0,10);
   while(dates.includes(check)){streak++;const d=new Date(check);d.setDate(d.getDate()-1);check=d.toISOString().slice(0,10);}
   document.getElementById('s-streak').textContent=streak;
-  if(!entries.length){el.innerHTML='<div class="empty"><span>ð</span>No entries yet.<br>Write your first memory together.</div>';return;}
+  if(!entries.length){el.innerHTML='<div class="empty"><span>📖</span>No entries yet.<br>Write your first memory together.</div>';return;}
   el.innerHTML='<div class="entry-list">'+entries.map(e=>{
     const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
     const thumbs=(e.photos||[]).slice(0,3).map(u=>`<img src="${u}" alt="photo" />`).join('');
     const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
-    const authorIcon = e.author==='Sardorbek'?'ð§':'ð©';
+    const authorIcon = e.author==='Sardorbek'?'🧔':'👩';
     return `<div class="entry-card" onclick="openEntry('${e.id}')">
-      <div class="entry-top"><div><div class="entry-date">${date}${e.location?' Â· '+e.location:''}</div><span class="entry-author">${authorIcon} ${e.author||'?'}</span></div><div class="entry-mood">${e.moodEmoji||''}</div></div>
+      <div class="entry-top"><div><div class="entry-date">${date}${e.location?' · '+e.location:''}</div><span class="entry-author">${authorIcon} ${e.author||'?'}</span></div><div class="entry-mood">${e.moodEmoji||''}</div></div>
       <div class="entry-title">${e.title}</div>
       <div class="entry-preview">${e.body}</div>
       ${thumbs?`<div class="entry-thumb-strip">${thumbs}</div>`:''}
@@ -713,17 +777,17 @@ window.openEntry = (id) => {
   const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'';
   const photos=(e.photos||[]).map(u=>`<img src="${u}" alt="photo" onclick="openLightbox('${u}')" />`).join('');
   const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
-  const authorIcon=e.author==='Sardorbek'?'ð§':'ð©';
+  const authorIcon=e.author==='Sardorbek'?'🧔':'👩';
   document.getElementById('detail-inner').innerHTML=`
     <div class="detail-header">
       <div class="detail-title">${e.moodEmoji?e.moodEmoji+' ':''}${e.title}</div>
-      <div class="detail-meta">${date}${e.location?' Â· '+e.location:''} Â· ${authorIcon} ${e.author||'Unknown'}${e.mood?' Â· feeling '+e.mood:''}</div>
+      <div class="detail-meta">${date}${e.location?' · '+e.location:''} · ${authorIcon} ${e.author||'Unknown'}${e.mood?' · feeling '+e.mood:''}</div>
     </div>
     ${tags?`<div class="etags" style="margin-bottom:10px">${tags}</div>`:''}
     <div class="detail-body">${e.body}</div>
-    ${e.song ? `<div class="detail-song">🎵 <a href="${e.song}" target="_blank" rel="noopener">${e.song}</a> <button onclick="playSongFromEntry('${e.song}')" style="margin-left:8px;padding:3px 10px;background:var(--rose);color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;">▶ Play</button></div>` : ''}
+    ${e.song ? `<div class="detail-song"><🎵 <a href="${e.song}" target="_blank" rel="noopener">${e.song}</a> <button onclick="playSongFromEntry('${e.song}')" style="margin-left:8px;padding:3px 10px;background:var(--rose);color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;">▶ Play</button></div>` : ''}
     ${photos?`<div class="detail-photos">${photos}</div>`:''}
-    ${e.author===currentWho?`<button class="edit-btn" onclick="openEditEntry('${e.id}')">✏️ Edit</button> <button class="del-btn" onclick="deleteEntry('${e.id}')">ð Delete entry</button>`:''}`;
+    ${e.author===currentWho?`<button class="edit-btn" onclick="openEditEntry('${e.id}')"> Edit</button> <button class="del-btn" onclick="deleteEntry('${e.id}')">🗑 Delete entry</button>`:''}`;
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-detail').classList.add('on');
@@ -736,7 +800,7 @@ window.deleteEntry = async (id) => {
   catch(e){toast('Error: '+e.message);}
   showLoader(false);
 };
-// ── EDIT ENTRY ────────────────────────────────────────────────────────────────
+//    EDIT ENTRY                                                                 
 window.openEditEntry = (id) => {
   const e = entries.find(x => x.id === id);
   if (!e) return;
@@ -764,7 +828,7 @@ window.saveEditEntry = async () => {
     await updateDoc(doc(db, 'entries', id), { title: title || 'Untitled', body, song, location });
     entries = entries.map(e => e.id === id ? {...e, title: title||'Untitled', body, song, location} : e);
     closeEditModal();
-    toast('Memory updated! 💕');
+    toast('Memory updated! =💕');
     renderEntries();
     openEntry(id);
   } catch(e) { toast('Error: ' + e.message); }
@@ -773,12 +837,12 @@ window.saveEditEntry = async () => {
 
 
 
-// ââ SETTINGS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
 async function loadSettings(){try{const s=await fsGetSettings();if(s.cover_photo)applyCover(s.cover_photo);const k=s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';document.getElementById('cfg-imgbb').value=k;if(k)document.getElementById('imgbb-status').textContent='\u2705 Key saved';}catch(e){}}
-window.saveSettings = () => { toast('Settings saved â'); };
+window.saveSettings = () => { toast('Settings saved ✓'); };
 
 
-// ââ IMGBB PHOTO UPLOAD ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── IMGBB PHOTO UPLOAD ────────────────────────────────────────────────────────
 async function getImgbbKey(){try{const s=await fsGetSettings();return s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';}catch(e){return 'cd4d71a9640f191fb1b05c1deef0610c';}}
 
 window.saveImgbbKey = async () => {
@@ -791,7 +855,7 @@ window.saveImgbbKey = async () => {
 
 async function uploadToImgbb(file) {
   const key = await getImgbbKey();
-  if (!key) throw new Error('No ImgBB API key â add it in Settings');
+  if (!key) throw new Error('No ImgBB API key — add it in Settings');
   const form = new FormData();
   form.append('image', file);
   const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, { method:'POST', body:form });
@@ -806,17 +870,17 @@ setTimeout(async () => {
   if (el) {
     const k = await getImgbbKey();
     el.value = k;
-    if (k) document.getElementById('imgbb-status').textContent = 'â Key saved';
+    if (k) document.getElementById('imgbb-status').textContent = '✅ Key saved';
   }
 }, 400);
 
 
-// ââ MESSAGES ââââââââââââââââââââââââââââââââââââââââââ
+// ── MESSAGES ──────────────────────────────────────────
   async function loadMessages(){const snap=await new Promise(r=>onSnapshot(query(collection(db,'messages'),orderBy('timestamp')),r));const msgs=snap.docs.map(d=>({...d.data(),id:d.id}));renderChat(msgs);}
-  // ââ CHAT ââ
+  // ── CHAT ──
 let chatUnsub = null;
 let typingTimer = null;
-const REACTIONS = ['â¤ï¸','ð','ð®','ð¢','ð'];
+const REACTIONS = ['❤️','😂','😮','😢','👍'];
 
 function startChat() {
   if (chatUnsub) return;
@@ -835,7 +899,7 @@ function startChat() {
 function renderChat(msgs) {
   const box = document.getElementById('chat-messages');
   if (!msgs.length) {
-    box.innerHTML = '<div class="chat-empty"><span>ð¬</span>No messages yet.<br>Say something sweet ð</div>';
+    box.innerHTML = '<div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>';
     return;
   }
   let lastDate = '';
@@ -854,7 +918,7 @@ function renderChat(msgs) {
     return `${divider}<div class="msg ${isMe?'me':'them'}">
       <div class="msg-bubble">${content}</div>
       ${reacts?`<div class="react-row">${reacts}</div>`:''}
-      <div class="msg-meta">${m.author} Â· ${time} <span style="margin-left:5px">${reactBtns}</span></div>
+      <div class="msg-meta">${m.author} · ${time} <span style="margin-left:5px">${reactBtns}</span></div>
     </div>`;
   }).join('');
   box.scrollTop = box.scrollHeight;
@@ -908,100 +972,261 @@ window.autoGrow = (el) => { el.style.height='auto'; el.style.height=Math.min(el.
 const _origSwitch = window.switchTab;
 window.switchTab = (name, btn) => { _origSwitch(name, btn); if(name==='chat') startChat(); };
 
-// ââ LIGHTBOX âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── LIGHTBOX ─────────────────────────────────────────────────────────────────
 window.openLightbox=(url)=>{document.getElementById('lightbox-img').src=url;document.getElementById('lightbox').classList.add('open');};
 window.closeLightbox=()=>{document.getElementById('lightbox').classList.remove('open');};
 
 function showLoader(on){document.getElementById('loader').classList.toggle('on',on);}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
 
-// ── MUSIC PLAYER ─────────────────────────────────────────────────────────────
+//    MUSIC PLAYER                                                              
 let musicProgressTimer = null;
 
 window.toggleMusicPlayer = () => {
-  const player = document.getElementById('music-player');
-  if (player.style.display === 'none') {
-    player.style.display = 'block';
-  } else {
-    player.style.display = 'none';
-  }
+  const p = document.getElementById('music-player');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
 };
 
 window.closeMusicPlayer = () => {
   const audio = document.getElementById('music-audio');
   audio.pause();
+  audio.src = '';
   document.getElementById('music-player').style.display = 'none';
   document.getElementById('music-play-btn').textContent = '▶';
+  document.getElementById('music-disc').style.animation = '';
   clearInterval(musicProgressTimer);
+};
+
+window.loadMusicFile = (input) => {
+  const file = input.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  playMusicFromUrl(url, '🎵 ' + file.name, true);
 };
 
 window.loadMusicUrl = () => {
   const url = document.getElementById('music-url-input').value.trim();
-  if (!url) { toast('Please enter a music URL'); return; }
+  if (!url) { toast('Please enter an audio URL'); return; }
   playMusicFromUrl(url, url);
 };
 
-window.playMusicFromUrl = (url, label) => {
+window.playMusicFromUrl = (url, label, isLocal) => {
   const audio = document.getElementById('music-audio');
+  if (isLocal) { audio.removeAttribute('crossorigin'); } else { audio.crossOrigin = 'anonymous'; }
   audio.src = url;
-  audio.volume = (document.getElementById('music-volume').value || 80) / 100;
-  document.getElementById('music-title').textContent = label || 'Now Playing';
-  document.getElementById('music-url-display').textContent = url;
-  document.getElementById('music-url-input').value = url;
+  audio.volume = (parseInt(document.getElementById('music-volume').value) || 80) / 100;
+  document.getElementById('music-title').textContent = typeof label === 'string' ? label.substring(0,60) : 'Now Playing';
+  document.getElementById('music-url-display').textContent = isLocal ? 'Local file' : url;
+  if (!isLocal) document.getElementById('music-url-input').value = url;
   document.getElementById('music-player').style.display = 'block';
-  audio.play().then(() => {
-    document.getElementById('music-play-btn').textContent = '⏸';
-    startMusicProgress();
-  }).catch(e => {
-    toast('Cannot play this URL directly. Try a direct mp3/ogg link. 🎵');
-  });
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      document.getElementById('music-play-btn').textContent = '⏸';
+      document.getElementById('music-disc').style.animation = 'spin 3s linear infinite';
+      startMusicProgress();
+    }).catch(e => {
+      toast('Cannot play this audio. Try a direct .mp3/.ogg/.wav link or use 📁 Device button for local files.');
+      document.getElementById('music-play-btn').textContent = '▶';
+    });
+  }
 };
 
 window.toggleMusicPlay = () => {
   const audio = document.getElementById('music-audio');
   const btn = document.getElementById('music-play-btn');
+  const disc = document.getElementById('music-disc');
+  if (!audio.src) { toast('Load a track first!'); return; }
   if (audio.paused) {
     audio.play().then(() => {
       btn.textContent = '⏸';
+      disc.style.animation = 'spin 3s linear infinite';
       startMusicProgress();
     }).catch(e => toast('Playback error: ' + e.message));
   } else {
     audio.pause();
     btn.textContent = '▶';
+    disc.style.animation = '';
     clearInterval(musicProgressTimer);
   }
 };
+
+function formatTime(secs) {
+  if (!secs || isNaN(secs)) return '0:00';
+  const m = Math.floor(secs / 60);
+  const s = Math.floor(secs % 60).toString().padStart(2,'0');
+  return m + ':' + s;
+}
 
 function startMusicProgress() {
   clearInterval(musicProgressTimer);
   musicProgressTimer = setInterval(() => {
     const audio = document.getElementById('music-audio');
-    if (!audio.duration) return;
-    const pct = (audio.currentTime / audio.duration) * 100;
+    if (!audio || audio.readyState < 2) return;
+    const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
     document.getElementById('music-progress').value = pct;
-    const mins = Math.floor(audio.currentTime / 60);
-    const secs = Math.floor(audio.currentTime % 60).toString().padStart(2,'0');
-    document.getElementById('music-time').textContent = mins + ':' + secs;
+    document.getElementById('music-cur-time').textContent = formatTime(audio.currentTime);
+    document.getElementById('music-dur-time').textContent = formatTime(audio.duration);
     if (audio.ended) {
       document.getElementById('music-play-btn').textContent = '▶';
+      document.getElementById('music-disc').style.animation = '';
       clearInterval(musicProgressTimer);
     }
-  }, 1000);
+  }, 500);
 }
 
 window.seekMusic = (val) => {
   const audio = document.getElementById('music-audio');
-  if (audio.duration) audio.currentTime = (val / 100) * audio.duration;
+  if (audio && audio.duration) audio.currentTime = (val / 100) * audio.duration;
 };
 
 window.setMusicVolume = (val) => {
   const audio = document.getElementById('music-audio');
-  audio.volume = val / 100;
+  if (audio) audio.volume = val / 100;
 };
 
-// Play from song link in entry detail
 window.playSongFromEntry = (url) => {
   playMusicFromUrl(url, '🎵 ' + url);
+};
+
+
+// ── PHOTO EDITOR ─────────────────────────────────────────────────────────────
+let _editingPhotoIdx = -1;
+let _editingOriginalFile = null;
+let _editingCanvas = null;
+let _editingCtx = null;
+let _editingRotation = 0;
+let _editingFlipH = false;
+let _editingFlipV = false;
+let _currentFilter = 'none';
+let _editingImg = null;
+
+window.openPhotoEditor = (idx) => {
+  _editingPhotoIdx = idx;
+  _editingRotation = 0;
+  _editingFlipH = false;
+  _editingFlipV = false;
+  _currentFilter = 'none';
+  _editingOriginalFile = photoFiles[idx];
+  const url = URL.createObjectURL(_editingOriginalFile);
+  const img = new Image();
+  img.onload = () => {
+    _editingImg = img;
+    _editingCanvas = document.getElementById('photo-editor-canvas');
+    _editingCtx = _editingCanvas.getContext('2d');
+    document.getElementById('photo-brightness').value = 0;
+    document.getElementById('photo-contrast').value = 0;
+    document.getElementById('photo-saturation').value = 0;
+    renderPhotoEdit();
+    document.getElementById('photo-editor-modal').style.display = 'block';
+  };
+  img.src = url;
+};
+
+window.closePhotoEditor = () => {
+  document.getElementById('photo-editor-modal').style.display = 'none';
+  _editingPhotoIdx = -1;
+};
+
+function renderPhotoEdit() {
+  if (!_editingImg || !_editingCanvas) return;
+  const img = _editingImg;
+  const rad = (_editingRotation * Math.PI) / 180;
+  const sin = Math.abs(Math.sin(rad)), cos = Math.abs(Math.cos(rad));
+  const w = img.naturalWidth * cos + img.naturalHeight * sin;
+  const h = img.naturalWidth * sin + img.naturalHeight * cos;
+  const maxW = Math.min(w, 500), scale = maxW / w;
+  _editingCanvas.width = w * scale;
+  _editingCanvas.height = h * scale;
+  const ctx = _editingCtx;
+  ctx.clearRect(0, 0, _editingCanvas.width, _editingCanvas.height);
+  ctx.save();
+  ctx.translate(_editingCanvas.width / 2, _editingCanvas.height / 2);
+  ctx.rotate(rad);
+  ctx.scale(_editingFlipH ? -1 : 1, _editingFlipV ? -1 : 1);
+  ctx.drawImage(img, -img.naturalWidth * scale / 2, -img.naturalHeight * scale / 2, img.naturalWidth * scale, img.naturalHeight * scale);
+  ctx.restore();
+  applyPhotoFilters(true);
+}
+
+window.photoRotate = (deg) => {
+  _editingRotation = (_editingRotation + deg + 360) % 360;
+  renderPhotoEdit();
+};
+
+window.photoFlip = (axis) => {
+  if (axis === 'h') _editingFlipH = !_editingFlipH;
+  else _editingFlipV = !_editingFlipV;
+  renderPhotoEdit();
+};
+
+window.applyFilter = (filter) => {
+  _currentFilter = filter;
+  document.querySelectorAll('[id^="filter-"]').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('filter-' + filter);
+  if (btn) btn.classList.add('active');
+  applyPhotoFilters(false);
+};
+
+window.applyPhotoFilters = (skipRedraw) => {
+  if (!skipRedraw) renderPhotoEdit();
+  if (!_editingCanvas || !_editingCtx) return;
+  const ctx = _editingCtx;
+  const brt = parseInt(document.getElementById('photo-brightness').value) || 0;
+  const cnt = parseInt(document.getElementById('photo-contrast').value) || 0;
+  const sat = parseInt(document.getElementById('photo-saturation').value) || 0;
+  const imgData = ctx.getImageData(0, 0, _editingCanvas.width, _editingCanvas.height);
+  const d = imgData.data;
+  const cntFactor = (259 * (cnt + 255)) / (255 * (259 - cnt));
+  for (let i = 0; i < d.length; i += 4) {
+    let r = d[i], g = d[i+1], b = d[i+2];
+    // Filter
+    if (_currentFilter === 'grayscale') { const avg=(r+g+b)/3; r=g=b=avg; }
+    else if (_currentFilter === 'sepia') { r=Math.min(255,r*0.393+g*0.769+b*0.189); g=Math.min(255,d[i]*0.349+g*0.686+b*0.168); b=Math.min(255,d[i]*0.272+d[i+1]*0.534+b*0.131); }
+    else if (_currentFilter === 'warm') { r=Math.min(255,r*1.1); b=Math.max(0,b*0.85); }
+    else if (_currentFilter === 'cool') { b=Math.min(255,b*1.15); r=Math.max(0,r*0.85); }
+    else if (_currentFilter === 'vivid') { r=Math.min(255,r*1.2); g=Math.min(255,g*1.1); b=Math.min(255,b*1.2); }
+    // Brightness
+    r = Math.min(255,Math.max(0, r + brt));
+    g = Math.min(255,Math.max(0, g + brt));
+    b = Math.min(255,Math.max(0, b + brt));
+    // Contrast
+    r = Math.min(255,Math.max(0, cntFactor*(r-128)+128));
+    g = Math.min(255,Math.max(0, cntFactor*(g-128)+128));
+    b = Math.min(255,Math.max(0, cntFactor*(b-128)+128));
+    // Saturation
+    const gray = 0.2126*r+0.7152*g+0.0722*b;
+    const satF = 1 + sat/100;
+    d[i]   = Math.min(255,Math.max(0, gray + (r-gray)*satF));
+    d[i+1] = Math.min(255,Math.max(0, gray + (g-gray)*satF));
+    d[i+2] = Math.min(255,Math.max(0, gray + (b-gray)*satF));
+  }
+  ctx.putImageData(imgData, 0, 0);
+};
+
+window.resetPhotoEdit = () => {
+  _editingRotation = 0;
+  _editingFlipH = false;
+  _editingFlipV = false;
+  _currentFilter = 'none';
+  document.getElementById('photo-brightness').value = 0;
+  document.getElementById('photo-contrast').value = 0;
+  document.getElementById('photo-saturation').value = 0;
+  document.querySelectorAll('[id^="filter-"]').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('filter-none');
+  if (btn) btn.classList.add('active');
+  renderPhotoEdit();
+};
+
+window.savePhotoEdit = () => {
+  if (_editingPhotoIdx < 0 || !_editingCanvas) return;
+  _editingCanvas.toBlob(blob => {
+    const editedFile = new File([blob], photoFiles[_editingPhotoIdx].name, { type: 'image/png' });
+    photoFiles[_editingPhotoIdx] = editedFile;
+    renderPreviews();
+    closePhotoEditor();
+    toast('Photo saved! ✨');
+  }, 'image/png');
 };
 
 </script>
