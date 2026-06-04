@@ -457,33 +457,43 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 </div>
 
 <!-- MUSIC PLAYER -->
-<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:12px 16px;z-index:9999;box-shadow:0 -4px 20px rgba(0,0,0,0.4);font-family:inherit;">
-  <div style="max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <div id="music-disc" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#e94560,#0f3460);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 12px rgba(233,69,96,0.4);">
-        <span style="font-size:18px;">&#127925;</span>
+<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:14px 16px 10px;z-index:9999;box-shadow:0 -4px 24px rgba(0,0,0,0.5);font-family:inherit;">
+  <div style="max-width:750px;margin:0 auto;">
+    <!-- Top row -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <!-- Animated disc -->
+      <div id="music-disc" style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#e94560,#0f3460);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 16px rgba(233,69,96,0.5);">
+        <span style="font-size:20px;">&#127925;</span>
       </div>
-      <div style="flex:1;min-width:160px;">
-        <div id="music-title" style="font-weight:600;font-size:14px;color:#e94560;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;">No track loaded</div>
-        <input id="music-url-input" type="text" placeholder="Paste audio URL here..." style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:4px 8px;border-radius:6px;font-size:12px;width:100%;margin-top:2px;outline:none;" />
+      <!-- Track info & controls -->
+      <div style="flex:1;min-width:0;">
+        <div id="music-title" style="font-weight:700;font-size:13px;color:#e94560;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">No track loaded</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px;">Use Device button to upload from your phone &#8593;</div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-        <button onclick="window.loadMusicUrl()" style="background:linear-gradient(135deg,#e94560,#c0392b);border:none;color:#fff;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;">&#9654; Play URL</button>
-        <label style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;">
-          &#128193; Device
-          <input id="music-file-input" type="file" accept="audio/*" style="display:none;" onchange="window.loadMusicFile(this)" />
+      <!-- Action buttons -->
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <label title="Upload from your phone or computer" style="background:linear-gradient(135deg,#e94560,#c0392b);border:none;color:#fff;padding:7px 14px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:0.3px;display:inline-block;">
+          &#128193; Upload Music
+          <input id="music-file-input" type="file" accept="audio/*,video/mp4" style="display:none;" onchange="window.loadMusicFile(this)" />
         </label>
-        <button id="music-play-btn" onclick="window.toggleMusicPlay()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">&#9654;</button>
-        <button onclick="window.closeMusicPlayer()" style="background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.6);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;">&#x2715;</button>
+        <button id="music-play-btn" onclick="window.toggleMusicPlay()" title="Play / Pause" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">&#9654;</button>
+        <button onclick="window.closeMusicPlayer()" title="Close player" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:18px;cursor:pointer;padding:4px;line-height:1;">&#x2715;</button>
       </div>
     </div>
-    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
-      <span id="music-current-time" style="font-size:11px;color:rgba(255,255,255,0.6);min-width:35px;">0:00</span>
-      <div style="flex:1;position:relative;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;" onclick="window.seekMusicClick(event,this)">
-        <div id="music-progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#e94560,#ff6b8a);border-radius:3px;pointer-events:none;"></div>
+    <!-- URL input row (collapsed by default, shown as secondary option) -->
+    <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+      <input id="music-url-input" type="url" placeholder="Or paste a direct .mp3 / .ogg link (not Spotify/Apple Music)..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 10px;border-radius:8px;font-size:11px;outline:none;min-width:0;" />
+      <button onclick="window.loadMusicUrl()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;white-space:nowrap;">&#9654; Play link</button>
+    </div>
+    <!-- Progress row -->
+    <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
+      <span id="music-current-time" style="font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;">0:00</span>
+      <div style="flex:1;position:relative;height:5px;background:rgba(255,255,255,0.15);border-radius:3px;cursor:pointer;" onclick="window.seekMusicClick(event,this)">
+        <div id="music-progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#e94560,#ff6b8a);border-radius:3px;pointer-events:none;transition:width 0.4s linear;"></div>
       </div>
-      <span id="music-total-time" style="font-size:11px;color:rgba(255,255,255,0.6);min-width:35px;">0:00</span>
-      <input id="music-volume" type="range" min="0" max="100" value="80" style="width:70px;accent-color:#e94560;" oninput="window.setMusicVolume(this.value)" />
+      <span id="music-total-time" style="font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;">0:00</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.4);">&#128266;</span>
+      <input id="music-volume" type="range" min="0" max="100" value="80" style="width:65px;accent-color:#e94560;cursor:pointer;" oninput="window.setMusicVolume(this.value)" />
     </div>
   </div>
 </div>
@@ -986,16 +996,35 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 let musicProgressTimer = null;
 let _musicIsPlaying = false;
 
+// Streaming services that don't provide direct audio
+const STREAMING_DOMAINS = [
+  'music.apple.com','spotify.com','open.spotify.com',
+  'youtube.com','youtu.be','soundcloud.com',
+  'tidal.com','deezer.com','music.amazon',
+  'pandora.com','napster.com'
+];
+
+function _isStreamingUrl(url) {
+  try { const h = new URL(url).hostname.toLowerCase(); return STREAMING_DOMAINS.some(d => h.includes(d)); }
+  catch(e) { return false; }
+}
+
+function _isDirectAudio(url) {
+  try {
+    const p = new URL(url).pathname.toLowerCase();
+    return /.(mp3|ogg|wav|aac|flac|m4a|opus|webm)(?.*)?$/.test(p);
+  } catch(e) { return false; }
+}
+
 function formatTime(s) {
   if (!s || isNaN(s) || !isFinite(s)) return '0:00';
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
   return m + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
 window.toggleMusicPlayer = () => {
-  const player = document.getElementById('music-player');
-  if (player) player.style.display = player.style.display === 'none' ? 'block' : 'none';
+  const p = document.getElementById('music-player');
+  if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
 };
 
 window.closeMusicPlayer = () => {
@@ -1003,13 +1032,23 @@ window.closeMusicPlayer = () => {
   if (audio) { audio.pause(); audio.src = ''; }
   _musicIsPlaying = false;
   clearInterval(musicProgressTimer);
-  const player = document.getElementById('music-player');
-  if (player) player.style.display = 'none';
+  const p = document.getElementById('music-player');
+  if (p) p.style.display = 'none';
+  _resetPlayerUI();
+};
+
+function _resetPlayerUI() {
   const btn = document.getElementById('music-play-btn');
   if (btn) btn.innerHTML = '&#9654;';
   const disc = document.getElementById('music-disc');
   if (disc) disc.style.animation = '';
-};
+  const prog = document.getElementById('music-progress-bar');
+  if (prog) prog.style.width = '0%';
+  const cur = document.getElementById('music-current-time');
+  if (cur) cur.textContent = '0:00';
+  const tot = document.getElementById('music-total-time');
+  if (tot) tot.textContent = '0:00';
+}
 
 window.loadMusicFile = (input) => {
   if (!input || !input.files || !input.files[0]) return;
@@ -1017,48 +1056,71 @@ window.loadMusicFile = (input) => {
   const url = URL.createObjectURL(file);
   const label = file.name.replace(/.[^.]+$/, '');
   window.playMusicFromUrl(url, label, true);
+  // Reset input so same file can be re-selected
+  input.value = '';
 };
 
 window.loadMusicUrl = () => {
   const urlInput = document.getElementById('music-url-input');
-  const url = urlInput ? urlInput.value.trim() : '';
-  if (!url) { toast('Please enter an audio URL'); return; }
+  const url = (urlInput ? urlInput.value : '').trim();
+  if (!url) { toast('Please paste an audio URL first'); return; }
+
+  // Check for streaming services
+  if (_isStreamingUrl(url)) {
+    const service = url.includes('apple') ? 'Apple Music' :
+                    url.includes('spotify') ? 'Spotify' :
+                    url.includes('youtube') || url.includes('youtu.be') ? 'YouTube' :
+                    url.includes('soundcloud') ? 'SoundCloud' : 'this streaming service';
+    toast(service + ' links cannot be played directly. Please use the Upload Music button to upload the song file from your device instead.');
+    return;
+  }
+
   window.playMusicFromUrl(url, url, false);
 };
 
 window.playMusicFromUrl = (url, label, isLocal) => {
   const audio = document.getElementById('music-audio');
   if (!audio) { toast('Audio element not found'); return; }
+
+  // Pause & reset
   audio.pause();
   clearInterval(musicProgressTimer);
   _musicIsPlaying = false;
+  _resetPlayerUI();
+
+  // Handle crossOrigin
   if (isLocal || (url && url.startsWith('blob:'))) {
     audio.removeAttribute('crossorigin');
   } else {
     audio.crossOrigin = 'anonymous';
   }
+
+  // Set volume
   const volEl = document.getElementById('music-volume');
-  audio.volume = (parseInt(volEl ? volEl.value : '80') || 80) / 100;
+  audio.volume = Math.max(0, Math.min(1, (parseInt(volEl ? volEl.value : '80') || 80) / 100));
+
+  // Set src and load
   audio.src = url;
   audio.load();
+
+  // Update title
   const titleEl = document.getElementById('music-title');
   if (titleEl) {
-    const lbl = (typeof label === 'string' && label) ? label : url;
-    titleEl.textContent = lbl.length > 30 ? lbl.substring(0, 28) + '...' : lbl;
+    const lbl = typeof label === 'string' && label ? label : (isLocal ? 'Local file' : url);
+    titleEl.textContent = lbl.length > 40 ? lbl.substring(0, 38) + '...' : lbl;
     titleEl.title = lbl;
   }
-  const urlInputEl = document.getElementById('music-url-input');
-  if (urlInputEl && !isLocal) urlInputEl.value = url;
+
+  // Show player
   const player = document.getElementById('music-player');
   if (player) player.style.display = 'block';
-  const prog = document.getElementById('music-progress-bar');
-  if (prog) prog.style.width = '0%';
-  const curTime = document.getElementById('music-current-time');
-  if (curTime) curTime.textContent = '0:00';
-  const totTime = document.getElementById('music-total-time');
-  if (totTime) totTime.textContent = '0:00';
-  const doPlay = () => {
-    const promise = audio.play();
+
+  // Remove old listeners before adding new ones
+  const newAudio = audio;
+
+  const onCanPlay = () => {
+    newAudio.removeEventListener('error', onError);
+    const promise = newAudio.play();
     if (promise !== undefined) {
       promise.then(() => {
         _musicIsPlaying = true;
@@ -1068,24 +1130,33 @@ window.playMusicFromUrl = (url, label, isLocal) => {
         if (disc) disc.style.animation = 'spin 3s linear infinite';
         startMusicProgress();
       }).catch(err => {
-        console.error('Play error:', err);
-        toast('Cannot play: ' + (err.message || 'Check URL or file format'));
+        console.error('Play failed:', err);
+        toast('Could not play audio. Try the Upload Music button to load a file from your device.');
         _musicIsPlaying = false;
       });
     }
   };
-  audio.addEventListener('canplay', doPlay, { once: true });
-  audio.addEventListener('error', () => {
+
+  const onError = () => {
+    newAudio.removeEventListener('canplay', onCanPlay);
     const errMap = { 1: 'Aborted', 2: 'Network error', 3: 'Decode error', 4: 'Format not supported' };
-    const msg = audio.error ? (errMap[audio.error.code] || 'Unknown error') : 'Load error';
-    toast('Audio error: ' + msg + '. Try a direct MP3/OGG link.');
-  }, { once: true });
+    const code = newAudio.error ? newAudio.error.code : 0;
+    const msg = errMap[code] || 'Could not load audio';
+    if (isLocal) {
+      toast(msg + '. Try a different audio file (MP3 or OGG works best).');
+    } else {
+      toast('Cannot load this URL (' + msg + '). Only direct audio file links work (ending in .mp3, .ogg, etc). Use Upload Music for Spotify/Apple Music songs.');
+    }
+  };
+
+  newAudio.addEventListener('canplay', onCanPlay, { once: true });
+  newAudio.addEventListener('error', onError, { once: true });
 };
 
 window.toggleMusicPlay = () => {
   const audio = document.getElementById('music-audio');
   if (!audio || !audio.src || audio.src === window.location.href) {
-    toast('Load a track first');
+    toast('Use the Upload Music button to load a song first!');
     return;
   }
   if (_musicIsPlaying) {
@@ -1104,7 +1175,9 @@ window.toggleMusicPlay = () => {
       const disc = document.getElementById('music-disc');
       if (disc) disc.style.animation = 'spin 3s linear infinite';
       startMusicProgress();
-    }).catch(err => { toast('Play failed: ' + (err.message || 'error')); });
+    }).catch(err => {
+      toast('Playback failed. Please reload the track using Upload Music.');
+    });
   }
 };
 
@@ -1113,22 +1186,22 @@ function startMusicProgress() {
   musicProgressTimer = setInterval(() => {
     const audio = document.getElementById('music-audio');
     if (!audio || audio.paused) { clearInterval(musicProgressTimer); return; }
-    const dur = audio.duration;
-    const cur = audio.currentTime;
-    if (dur && !isNaN(dur) && isFinite(dur)) {
+    const dur = audio.duration, cur = audio.currentTime;
+    if (dur && isFinite(dur)) {
       const prog = document.getElementById('music-progress-bar');
-      if (prog) prog.style.width = ((cur / dur) * 100).toFixed(1) + '%';
+      if (prog) prog.style.width = ((cur / dur) * 100).toFixed(2) + '%';
       const curEl = document.getElementById('music-current-time');
       if (curEl) curEl.textContent = formatTime(cur);
       const totEl = document.getElementById('music-total-time');
       if (totEl) totEl.textContent = formatTime(dur);
-      if (cur >= dur - 0.2) {
+      if (cur >= dur - 0.3) {
         _musicIsPlaying = false;
         clearInterval(musicProgressTimer);
         const btn = document.getElementById('music-play-btn');
         if (btn) btn.innerHTML = '&#9654;';
         const disc = document.getElementById('music-disc');
         if (disc) disc.style.animation = '';
+        if (prog) prog.style.width = '0%';
       }
     }
   }, 500);
@@ -1138,8 +1211,7 @@ window.seekMusicClick = (evt, bar) => {
   const audio = document.getElementById('music-audio');
   if (!audio || !audio.duration || isNaN(audio.duration)) return;
   const rect = bar.getBoundingClientRect();
-  const pct = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width));
-  audio.currentTime = pct * audio.duration;
+  audio.currentTime = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width)) * audio.duration;
 };
 
 window.setMusicVolume = (val) => {
@@ -1149,6 +1221,11 @@ window.setMusicVolume = (val) => {
 
 window.playSongFromEntry = (url) => {
   if (!url) return;
+  if (_isStreamingUrl(url)) {
+    toast('This is a streaming link. Open it in your browser and download the song, then use Upload Music to play it here.');
+    window.toggleMusicPlayer();
+    return;
+  }
   window.playMusicFromUrl(url, '🎵 ' + url, false);
 };
 
