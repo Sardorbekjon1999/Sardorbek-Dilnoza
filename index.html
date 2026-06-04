@@ -457,34 +457,37 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 </div>
 
 <!-- MUSIC PLAYER -->
-<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#f8e8f0,#e8f0f8);border-top:2px solid rgba(179,108,155,0.3);padding:12px 16px;box-shadow:0 -4px 24px rgba(0,0,0,0.12);">
+<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:12px 16px;z-index:9999;box-shadow:0 -4px 20px rgba(0,0,0,0.4);font-family:inherit;">
   <div style="max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-      <div id="music-disc" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#b36c9b,#7bacd4);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:transform 0.3s;">🎵</div>
-      <div style="flex:1;min-width:0;">
-        <div id="music-title" style="font-size:0.82rem;font-weight:700;color:#3f3f40;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'DM Sans',sans-serif;">No track loaded</div>
-        <div id="music-url-display" style="font-size:0.7rem;color:#8291a1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'DM Sans',sans-serif;"></div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div id="music-disc" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#e94560,#0f3460);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 12px rgba(233,69,96,0.4);">
+        <span style="font-size:18px;">&#127925;</span>
       </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-        <button id="music-play-btn" onclick="toggleMusicPlay()" style="background:linear-gradient(135deg,#b36c9b,#c97dae);border:none;border-radius:50%;width:38px;height:38px;color:white;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(179,108,155,0.4);">▶</button>
-        <button onclick="closeMusicPlayer()" style="background:rgba(130,145,161,0.15);border:none;border-radius:50%;width:30px;height:30px;color:#8291a1;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+      <div style="flex:1;min-width:160px;">
+        <div id="music-title" style="font-weight:600;font-size:14px;color:#e94560;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;">No track loaded</div>
+        <input id="music-url-input" type="text" placeholder="Paste audio URL here..." style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:4px 8px;border-radius:6px;font-size:12px;width:100%;margin-top:2px;outline:none;" />
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <button onclick="window.loadMusicUrl()" style="background:linear-gradient(135deg,#e94560,#c0392b);border:none;color:#fff;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;">&#9654; Play URL</button>
+        <label style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;">
+          &#128193; Device
+          <input id="music-file-input" type="file" accept="audio/*" style="display:none;" onchange="window.loadMusicFile(this)" />
+        </label>
+        <button id="music-play-btn" onclick="window.toggleMusicPlay()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;">&#9654;</button>
+        <button onclick="window.closeMusicPlayer()" style="background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.6);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;">&#x2715;</button>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-      <span id="music-cur-time" style="font-size:0.7rem;color:#8291a1;min-width:30px;font-family:'DM Sans',sans-serif;">0:00</span>
-      <input type="range" id="music-progress" value="0" min="0" max="100" step="0.1" style="flex:1;accent-color:#b36c9b;height:4px;cursor:pointer;" oninput="seekMusic(this.value)" />
-      <span id="music-dur-time" style="font-size:0.7rem;color:#8291a1;min-width:30px;text-align:right;font-family:'DM Sans',sans-serif;">0:00</span>
-      <span style="font-size:0.7rem;color:#8291a1;font-family:'DM Sans',sans-serif;">🔊</span>
-      <input type="range" id="music-volume" value="80" min="0" max="100" step="1" style="width:60px;accent-color:#b36c9b;cursor:pointer;" oninput="setMusicVolume(this.value)" />
-    </div>
-    <div style="display:flex;gap:6px;align-items:center;">
-      <input type="text" id="music-url-input" placeholder="🔗 Paste a direct audio URL (mp3, ogg, wav...)" style="flex:1;padding:7px 12px;border:1.5px solid rgba(179,108,155,0.3);border-radius:20px;font-size:0.78rem;font-family:'DM Sans',sans-serif;background:white;outline:none;" />
-      <button onclick="loadMusicUrl()" style="padding:7px 14px;background:linear-gradient(135deg,#b36c9b,#c97dae);color:white;border:none;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'DM Sans',sans-serif;white-space:nowrap;">▶ URL</button>
-      <label style="padding:7px 14px;background:linear-gradient(135deg,#7bacd4,#8cc0e8);color:white;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'DM Sans',sans-serif;white-space:nowrap;">📁 Device<input type="file" id="music-file-input" accept="audio/*" style="display:none;" onchange="loadMusicFile(this)"></label>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+      <span id="music-current-time" style="font-size:11px;color:rgba(255,255,255,0.6);min-width:35px;">0:00</span>
+      <div style="flex:1;position:relative;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;" onclick="window.seekMusicClick(event,this)">
+        <div id="music-progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#e94560,#ff6b8a);border-radius:3px;pointer-events:none;"></div>
+      </div>
+      <span id="music-total-time" style="font-size:11px;color:rgba(255,255,255,0.6);min-width:35px;">0:00</span>
+      <input id="music-volume" type="range" min="0" max="100" value="80" style="width:70px;accent-color:#e94560;" oninput="window.setMusicVolume(this.value)" />
     </div>
   </div>
 </div>
-<audio id="music-audio" crossorigin="anonymous"></audio>
+<audio id="music-audio" preload="auto"></audio>
 
 <!-- PHOTO EDITOR MODAL -->
 <div id="photo-editor-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;overflow-y:auto;padding:20px;">
@@ -981,114 +984,173 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 
 //    MUSIC PLAYER                                                              
 let musicProgressTimer = null;
+let _musicIsPlaying = false;
+
+function formatTime(s) {
+  if (!s || isNaN(s) || !isFinite(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
 
 window.toggleMusicPlayer = () => {
-  const p = document.getElementById('music-player');
-  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  const player = document.getElementById('music-player');
+  if (player) player.style.display = player.style.display === 'none' ? 'block' : 'none';
 };
 
 window.closeMusicPlayer = () => {
   const audio = document.getElementById('music-audio');
-  audio.pause();
-  audio.src = '';
-  document.getElementById('music-player').style.display = 'none';
-  document.getElementById('music-play-btn').textContent = '▶';
-  document.getElementById('music-disc').style.animation = '';
+  if (audio) { audio.pause(); audio.src = ''; }
+  _musicIsPlaying = false;
   clearInterval(musicProgressTimer);
+  const player = document.getElementById('music-player');
+  if (player) player.style.display = 'none';
+  const btn = document.getElementById('music-play-btn');
+  if (btn) btn.innerHTML = '&#9654;';
+  const disc = document.getElementById('music-disc');
+  if (disc) disc.style.animation = '';
 };
 
 window.loadMusicFile = (input) => {
+  if (!input || !input.files || !input.files[0]) return;
   const file = input.files[0];
-  if (!file) return;
   const url = URL.createObjectURL(file);
-  playMusicFromUrl(url, '🎵 ' + file.name, true);
+  const label = file.name.replace(/.[^.]+$/, '');
+  window.playMusicFromUrl(url, label, true);
 };
 
 window.loadMusicUrl = () => {
-  const url = document.getElementById('music-url-input').value.trim();
+  const urlInput = document.getElementById('music-url-input');
+  const url = urlInput ? urlInput.value.trim() : '';
   if (!url) { toast('Please enter an audio URL'); return; }
-  playMusicFromUrl(url, url);
+  window.playMusicFromUrl(url, url, false);
 };
 
 window.playMusicFromUrl = (url, label, isLocal) => {
   const audio = document.getElementById('music-audio');
-  if (isLocal) { audio.removeAttribute('crossorigin'); } else { audio.crossOrigin = 'anonymous'; }
-  audio.src = url;
-  audio.volume = (parseInt(document.getElementById('music-volume').value) || 80) / 100;
-  document.getElementById('music-title').textContent = typeof label === 'string' ? label.substring(0,60) : 'Now Playing';
-  document.getElementById('music-url-display').textContent = isLocal ? 'Local file' : url;
-  if (!isLocal) document.getElementById('music-url-input').value = url;
-  document.getElementById('music-player').style.display = 'block';
-  const playPromise = audio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      document.getElementById('music-play-btn').textContent = '⏸';
-      document.getElementById('music-disc').style.animation = 'spin 3s linear infinite';
-      startMusicProgress();
-    }).catch(e => {
-      toast('Cannot play this audio. Try a direct .mp3/.ogg/.wav link or use 📁 Device button for local files.');
-      document.getElementById('music-play-btn').textContent = '▶';
-    });
+  if (!audio) { toast('Audio element not found'); return; }
+  audio.pause();
+  clearInterval(musicProgressTimer);
+  _musicIsPlaying = false;
+  if (isLocal || (url && url.startsWith('blob:'))) {
+    audio.removeAttribute('crossorigin');
+  } else {
+    audio.crossOrigin = 'anonymous';
   }
+  const volEl = document.getElementById('music-volume');
+  audio.volume = (parseInt(volEl ? volEl.value : '80') || 80) / 100;
+  audio.src = url;
+  audio.load();
+  const titleEl = document.getElementById('music-title');
+  if (titleEl) {
+    const lbl = (typeof label === 'string' && label) ? label : url;
+    titleEl.textContent = lbl.length > 30 ? lbl.substring(0, 28) + '...' : lbl;
+    titleEl.title = lbl;
+  }
+  const urlInputEl = document.getElementById('music-url-input');
+  if (urlInputEl && !isLocal) urlInputEl.value = url;
+  const player = document.getElementById('music-player');
+  if (player) player.style.display = 'block';
+  const prog = document.getElementById('music-progress-bar');
+  if (prog) prog.style.width = '0%';
+  const curTime = document.getElementById('music-current-time');
+  if (curTime) curTime.textContent = '0:00';
+  const totTime = document.getElementById('music-total-time');
+  if (totTime) totTime.textContent = '0:00';
+  const doPlay = () => {
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        _musicIsPlaying = true;
+        const btn = document.getElementById('music-play-btn');
+        if (btn) btn.innerHTML = '&#9646;&#9646;';
+        const disc = document.getElementById('music-disc');
+        if (disc) disc.style.animation = 'spin 3s linear infinite';
+        startMusicProgress();
+      }).catch(err => {
+        console.error('Play error:', err);
+        toast('Cannot play: ' + (err.message || 'Check URL or file format'));
+        _musicIsPlaying = false;
+      });
+    }
+  };
+  audio.addEventListener('canplay', doPlay, { once: true });
+  audio.addEventListener('error', () => {
+    const errMap = { 1: 'Aborted', 2: 'Network error', 3: 'Decode error', 4: 'Format not supported' };
+    const msg = audio.error ? (errMap[audio.error.code] || 'Unknown error') : 'Load error';
+    toast('Audio error: ' + msg + '. Try a direct MP3/OGG link.');
+  }, { once: true });
 };
 
 window.toggleMusicPlay = () => {
   const audio = document.getElementById('music-audio');
-  const btn = document.getElementById('music-play-btn');
-  const disc = document.getElementById('music-disc');
-  if (!audio.src) { toast('Load a track first!'); return; }
-  if (audio.paused) {
-    audio.play().then(() => {
-      btn.textContent = '⏸';
-      disc.style.animation = 'spin 3s linear infinite';
-      startMusicProgress();
-    }).catch(e => toast('Playback error: ' + e.message));
-  } else {
+  if (!audio || !audio.src || audio.src === window.location.href) {
+    toast('Load a track first');
+    return;
+  }
+  if (_musicIsPlaying) {
     audio.pause();
-    btn.textContent = '▶';
-    disc.style.animation = '';
+    _musicIsPlaying = false;
     clearInterval(musicProgressTimer);
+    const btn = document.getElementById('music-play-btn');
+    if (btn) btn.innerHTML = '&#9654;';
+    const disc = document.getElementById('music-disc');
+    if (disc) disc.style.animation = '';
+  } else {
+    audio.play().then(() => {
+      _musicIsPlaying = true;
+      const btn = document.getElementById('music-play-btn');
+      if (btn) btn.innerHTML = '&#9646;&#9646;';
+      const disc = document.getElementById('music-disc');
+      if (disc) disc.style.animation = 'spin 3s linear infinite';
+      startMusicProgress();
+    }).catch(err => { toast('Play failed: ' + (err.message || 'error')); });
   }
 };
-
-function formatTime(secs) {
-  if (!secs || isNaN(secs)) return '0:00';
-  const m = Math.floor(secs / 60);
-  const s = Math.floor(secs % 60).toString().padStart(2,'0');
-  return m + ':' + s;
-}
 
 function startMusicProgress() {
   clearInterval(musicProgressTimer);
   musicProgressTimer = setInterval(() => {
     const audio = document.getElementById('music-audio');
-    if (!audio || audio.readyState < 2) return;
-    const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-    document.getElementById('music-progress').value = pct;
-    document.getElementById('music-cur-time').textContent = formatTime(audio.currentTime);
-    document.getElementById('music-dur-time').textContent = formatTime(audio.duration);
-    if (audio.ended) {
-      document.getElementById('music-play-btn').textContent = '▶';
-      document.getElementById('music-disc').style.animation = '';
-      clearInterval(musicProgressTimer);
+    if (!audio || audio.paused) { clearInterval(musicProgressTimer); return; }
+    const dur = audio.duration;
+    const cur = audio.currentTime;
+    if (dur && !isNaN(dur) && isFinite(dur)) {
+      const prog = document.getElementById('music-progress-bar');
+      if (prog) prog.style.width = ((cur / dur) * 100).toFixed(1) + '%';
+      const curEl = document.getElementById('music-current-time');
+      if (curEl) curEl.textContent = formatTime(cur);
+      const totEl = document.getElementById('music-total-time');
+      if (totEl) totEl.textContent = formatTime(dur);
+      if (cur >= dur - 0.2) {
+        _musicIsPlaying = false;
+        clearInterval(musicProgressTimer);
+        const btn = document.getElementById('music-play-btn');
+        if (btn) btn.innerHTML = '&#9654;';
+        const disc = document.getElementById('music-disc');
+        if (disc) disc.style.animation = '';
+      }
     }
   }, 500);
 }
 
-window.seekMusic = (val) => {
+window.seekMusicClick = (evt, bar) => {
   const audio = document.getElementById('music-audio');
-  if (audio && audio.duration) audio.currentTime = (val / 100) * audio.duration;
+  if (!audio || !audio.duration || isNaN(audio.duration)) return;
+  const rect = bar.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width));
+  audio.currentTime = pct * audio.duration;
 };
 
 window.setMusicVolume = (val) => {
   const audio = document.getElementById('music-audio');
-  if (audio) audio.volume = val / 100;
+  if (audio) audio.volume = Math.max(0, Math.min(1, parseInt(val) / 100));
 };
 
 window.playSongFromEntry = (url) => {
-  playMusicFromUrl(url, '🎵 ' + url);
+  if (!url) return;
+  window.playMusicFromUrl(url, '🎵 ' + url, false);
 };
-
 
 // ── PHOTO EDITOR ─────────────────────────────────────────────────────────────
 let _editingPhotoIdx = -1;
