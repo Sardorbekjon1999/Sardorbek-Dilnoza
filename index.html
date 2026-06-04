@@ -268,6 +268,91 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 .photo-thumb img { width: 80px; height: 80px; object-fit: cover; display: block; border-radius: 8px; }
 .photo-thumb .rm { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(0,0,0,0.6); color: white; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .photo-thumb .edit-photo-btn { position: absolute; bottom: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; border: none; background: rgba(179,108,155,0.85); color: white; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+/* ============================================================
+   MOBILE RESPONSIVE max-width 600px
+   ============================================================ */
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  #app { padding: 0.75rem 0.6rem 5rem; max-width: 100%; }
+  .auth-card { padding: 2rem 1.25rem; margin: 1rem 0.75rem; border-radius: 18px; }
+  .who-row { gap: 0.5rem; }
+  .who-btn { font-size: 0.9rem; padding: 0.6rem 1rem; }
+  .btn-primary { font-size: 0.95rem; padding: 0.75rem; }
+  .auth-input { font-size: 1rem; padding: 0.6rem 0.8rem; }
+  .header { padding: 0.6rem 0; flex-wrap: wrap; gap: 0.4rem; }
+  .header-right { gap: 0.4rem; }
+  .who-badge { font-size: 0.8rem; padding: 0.3rem 0.8rem; }
+  .lock-btn { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+  .header-banner { height: 140px; border-radius: 12px; }
+  .header-banner-title { font-size: 1rem; }
+  .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; padding: 3px; border-radius: 10px; overflow: hidden; }
+  .tab { font-size: 0.62rem; padding: 0.45rem 0.2rem; border-radius: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .write-card { padding: 1.1rem 0.9rem; border-radius: 14px; }
+  .mood-row { gap: 0.4rem; flex-wrap: wrap; }
+  .mood-pill { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
+  .field-row { grid-template-columns: 1fr; gap: 0.6rem; }
+  .field { font-size: 0.9rem; padding: 0.6rem 0.8rem; border-radius: 10px; }
+  textarea.field { min-height: 120px; }
+  .photo-zone { padding: 0.8rem; min-height: 60px; }
+  .photo-thumb { width: 72px; height: 72px; border-radius: 8px; }
+  .save-btn { padding: 0.75rem; font-size: 0.95rem; }
+  .tag-chip { font-size: 0.75rem; padding: 0.25rem 0.55rem; }
+  .entry-list { gap: 0.75rem; }
+  .entry-card { padding: 0.9rem 1rem; border-radius: 14px; }
+  .entry-top { flex-wrap: wrap; gap: 0.3rem; }
+  .entry-title { font-size: 1rem; }
+  .entry-preview { font-size: 0.82rem; }
+  .entry-thumb-strip { gap: 0.3rem; }
+  .entry-thumb-strip img { width: 52px; height: 52px; border-radius: 6px; }
+  .detail-card { padding: 1.1rem 0.9rem; border-radius: 14px; }
+  .detail-title { font-size: 1.25rem; }
+  .detail-meta { flex-wrap: wrap; gap: 0.4rem; font-size: 0.8rem; }
+  .detail-body { font-size: 0.9rem; line-height: 1.65; }
+  .detail-photos { gap: 0.5rem; }
+  .detail-photos img { border-radius: 10px; width: 100%; max-width: 100%; height: auto; }
+  .detail-song { font-size: 0.82rem; word-break: break-all; }
+  .del-btn, .edit-btn { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .stat { padding: 0.7rem; border-radius: 10px; }
+  .stat-num { font-size: 1.4rem; }
+  .chat-wrap { height: calc(100vh - 240px); min-height: 320px; }
+  .chat-messages { padding: 0.75rem; gap: 0.5rem; }
+  .msg-bubble { font-size: 0.88rem; padding: 0.5rem 0.8rem; max-width: 82vw; border-radius: 14px; }
+  .msg-bubble img { max-width: 200px; border-radius: 10px; }
+  .msg-meta { font-size: 0.68rem; }
+  .chat-input-row { padding: 0.6rem 0.75rem; gap: 0.4rem; }
+  .chat-input { font-size: 0.9rem; padding: 0.55rem 0.75rem; }
+  .chat-send-btn { width: 38px; height: 38px; font-size: 1rem; }
+  .chat-photo-btn { width: 34px; height: 34px; font-size: 1rem; }
+  .settings-card { padding: 1.1rem 0.9rem; border-radius: 14px; }
+  .setting-row { flex-direction: column; gap: 0.4rem; align-items: flex-start; }
+  .setting-row label { font-size: 0.85rem; }
+  .setting-row input, .setting-row textarea { width: 100%; font-size: 0.9rem; }
+  .settings-save { width: 100%; padding: 0.75rem; font-size: 0.95rem; }
+  .cover-actions { flex-direction: column; gap: 0.5rem; }
+  .cover-action-btn { width: 100%; text-align: center; padding: 0.6rem; }
+  .cover-preview { height: 110px; border-radius: 12px; }
+  #music-player { padding: 10px 10px 8px; }
+  #music-disc { width: 36px; height: 36px; font-size: 16px; flex-shrink: 0; }
+  #music-title { font-size: 11px; max-width: 90px; }
+  #music-url-input { font-size: 10px; padding: 3px 6px; }
+  #music-play-btn { width: 30px; height: 30px; font-size: 13px; }
+  #music-volume { width: 45px; }
+  #music-current-time, #music-total-time { font-size: 10px; min-width: 24px; }
+  #photo-editor-modal > div { padding: 1rem 0.75rem; margin: 0.5rem; max-height: 95vh; overflow-y: auto; }
+  .photo-editor-canvas { max-width: 100%; height: auto; border-radius: 10px; }
+  #edit-entry-modal > div { padding: 1rem 0.75rem; margin: 0.5rem; max-height: 95vh; overflow-y: auto; border-radius: 16px; }
+  #edit-entry-modal .field-row { grid-template-columns: 1fr; }
+  .toast { font-size: 0.82rem; padding: 0.6rem 1rem; max-width: 90vw; left: 5vw; right: 5vw; bottom: 80px; text-align: center; }
+  button { touch-action: manipulation; }
+  * { -webkit-tap-highlight-color: transparent; }
+}
+@media (max-width: 360px) {
+  .tab { font-size: 0.55rem; }
+  .mood-pill { font-size: 0.72rem; padding: 0.3rem 0.55rem; }
+  .msg-bubble { max-width: 88vw; }
+}
 </style>
 </head>
 <body>
@@ -457,43 +542,38 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 </div>
 
 <!-- MUSIC PLAYER -->
-<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:14px 16px 10px;z-index:9999;box-shadow:0 -4px 24px rgba(0,0,0,0.5);font-family:inherit;">
+<div id="music-player" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:14px 12px 10px;z-index:9999;box-shadow:0 -4px 24px rgba(0,0,0,0.5);font-family:inherit;">
   <div style="max-width:750px;margin:0 auto;">
-    <!-- Top row -->
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <!-- Animated disc -->
-      <div id="music-disc" style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#e94560,#0f3460);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 16px rgba(233,69,96,0.5);">
-        <span style="font-size:20px;">&#127925;</span>
-      </div>
-      <!-- Track info & controls -->
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;">
+      <div id="music-disc" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#e94560,#0f3460);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 12px rgba(233,69,96,0.4);"><span style="font-size:18px;">&#127925;</span></div>
       <div style="flex:1;min-width:0;">
         <div id="music-title" style="font-weight:700;font-size:13px;color:#e94560;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">No track loaded</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px;">Use Device button to upload from your phone &#8593;</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px;">YouTube link or upload from device</div>
       </div>
-      <!-- Action buttons -->
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-        <label title="Upload from your phone or computer" style="background:linear-gradient(135deg,#e94560,#c0392b);border:none;color:#fff;padding:7px 14px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:0.3px;display:inline-block;">
-          &#128193; Upload Music
+      <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+        <label title="Upload from your phone" style="background:linear-gradient(135deg,#e94560,#c0392b);border:none;color:#fff;padding:6px 10px;border-radius:16px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block;">
+          &#128193; Upload
           <input id="music-file-input" type="file" accept="audio/*,video/mp4" style="display:none;" onchange="window.loadMusicFile(this)" />
         </label>
-        <button id="music-play-btn" onclick="window.toggleMusicPlay()" title="Play / Pause" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">&#9654;</button>
-        <button onclick="window.closeMusicPlayer()" title="Close player" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:18px;cursor:pointer;padding:4px;line-height:1;">&#x2715;</button>
+        <button id="music-play-btn" onclick="window.toggleMusicPlay()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;flex-shrink:0;">&#9654;</button>
+        <button onclick="window.closeMusicPlayer()" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:17px;cursor:pointer;padding:2px;line-height:1;flex-shrink:0;">&#x2715;</button>
       </div>
     </div>
-    <!-- URL input row (collapsed by default, shown as secondary option) -->
-    <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
-      <input id="music-url-input" type="url" placeholder="Or paste a direct .mp3 / .ogg link (not Spotify/Apple Music)..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 10px;border-radius:8px;font-size:11px;outline:none;min-width:0;" />
-      <button onclick="window.loadMusicUrl()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;white-space:nowrap;">&#9654; Play link</button>
+    <div style="margin-top:8px;display:flex;align-items:center;gap:5px;">
+      <input id="music-url-input" type="url" placeholder="Paste YouTube link to play any song..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 8px;border-radius:8px;font-size:11px;outline:none;min-width:0;" />
+      <button onclick="window.loadMusicUrl()" style="background:#FF0000;border:none;color:#fff;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;white-space:nowrap;font-weight:600;">&#9654; YouTube</button>
     </div>
-    <!-- Progress row -->
-    <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
-      <span id="music-current-time" style="font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;">0:00</span>
+    <div id="yt-player-wrap" style="display:none;margin-top:8px;border-radius:10px;overflow:hidden;position:relative;padding-bottom:56.25%;height:0;">
+      <iframe id="yt-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;" allow="autoplay;encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div id="audio-progress-row" style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+      <span id="music-current-time" style="font-size:10px;color:rgba(255,255,255,0.5);min-width:28px;">0:00</span>
       <div style="flex:1;position:relative;height:5px;background:rgba(255,255,255,0.15);border-radius:3px;cursor:pointer;" onclick="window.seekMusicClick(event,this)">
         <div id="music-progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#e94560,#ff6b8a);border-radius:3px;pointer-events:none;transition:width 0.4s linear;"></div>
       </div>
-      <span id="music-total-time" style="font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;">0:00</span>
-      <span style="font-size:11px;color:rgba(255,255,255,0.4);">&#128266;</span>
-      <input id="music-volume" type="range" min="0" max="100" value="80" style="width:65px;accent-color:#e94560;cursor:pointer;" oninput="window.setMusicVolume(this.value)" />
+      <span id="music-total-time" style="font-size:10px;color:rgba(255,255,255,0.5);min-width:28px;">0:00</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.35);">&#128266;</span>
+      <input id="music-volume" type="range" min="0" max="100" value="80" style="width:55px;accent-color:#e94560;cursor:pointer;" oninput="window.setMusicVolume(this.value)" />
     </div>
   </div>
 </div>
@@ -995,26 +1075,26 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 //    MUSIC PLAYER                                                              
 let musicProgressTimer = null;
 let _musicIsPlaying = false;
+let _musicMode = 'none';
 
-// Streaming services that don't provide direct audio
-const STREAMING_DOMAINS = [
-  'music.apple.com','spotify.com','open.spotify.com',
-  'youtube.com','youtu.be','soundcloud.com',
-  'tidal.com','deezer.com','music.amazon',
-  'pandora.com','napster.com'
-];
+const STREAMING_DOMAINS = ['spotify.com','open.spotify.com','tidal.com','deezer.com','music.amazon','pandora.com','napster.com'];
 
-function _isStreamingUrl(url) {
+function _isStreamingOnly(url) {
   try { const h = new URL(url).hostname.toLowerCase(); return STREAMING_DOMAINS.some(d => h.includes(d)); }
   catch(e) { return false; }
 }
 
-function _isDirectAudio(url) {
+function _getYouTubeId(url) {
   try {
-    const p = new URL(url).pathname.toLowerCase();
-    const audioExts = new RegExp('[.](mp3|ogg|wav|aac|flac|m4a|opus|webm)');
-    return audioExts.test(p);
-  } catch(e) { return false; }
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+    if (u.hostname.includes('youtube.com')) return u.searchParams.get('v') || u.pathname.replace('/shorts/','').split('/').filter(Boolean)[0] || null;
+    return null;
+  } catch(e) { return null; }
+}
+
+function _isAppleMusic(url) {
+  try { return new URL(url).hostname.includes('music.apple.com'); } catch(e) { return false; }
 }
 
 function formatTime(s) {
@@ -1031,11 +1111,17 @@ window.toggleMusicPlayer = () => {
 window.closeMusicPlayer = () => {
   const audio = document.getElementById('music-audio');
   if (audio) { audio.pause(); audio.src = ''; }
-  _musicIsPlaying = false;
+  _musicIsPlaying = false; _musicMode = 'none';
   clearInterval(musicProgressTimer);
   const p = document.getElementById('music-player');
   if (p) p.style.display = 'none';
   _resetPlayerUI();
+  const ytWrap = document.getElementById('yt-player-wrap');
+  if (ytWrap) ytWrap.style.display = 'none';
+  const ytIframe = document.getElementById('yt-iframe');
+  if (ytIframe) ytIframe.src = '';
+  const progRow = document.getElementById('audio-progress-row');
+  if (progRow) progRow.style.display = 'flex';
 };
 
 function _resetPlayerUI() {
@@ -1055,73 +1141,80 @@ window.loadMusicFile = (input) => {
   if (!input || !input.files || !input.files[0]) return;
   const file = input.files[0];
   const url = URL.createObjectURL(file);
-  const label = file.name.replace(/.[^.]+$/, '');
-  window.playMusicFromUrl(url, label, true);
-  // Reset input so same file can be re-selected
+  const label = file.name.replace(/[.][^.]+$/, '');
   input.value = '';
+  const ytWrap = document.getElementById('yt-player-wrap');
+  if (ytWrap) { ytWrap.style.display = 'none'; const f = document.getElementById('yt-iframe'); if(f) f.src=''; }
+  const progRow = document.getElementById('audio-progress-row');
+  if (progRow) progRow.style.display = 'flex';
+  window.playMusicFromUrl(url, label, true);
 };
 
 window.loadMusicUrl = () => {
   const urlInput = document.getElementById('music-url-input');
   const url = (urlInput ? urlInput.value : '').trim();
-  if (!url) { toast('Please paste an audio URL first'); return; }
-
-  // Check for streaming services
-  if (_isStreamingUrl(url)) {
-    const service = url.includes('apple') ? 'Apple Music' :
-                    url.includes('spotify') ? 'Spotify' :
-                    url.includes('youtube') || url.includes('youtu.be') ? 'YouTube' :
-                    url.includes('soundcloud') ? 'SoundCloud' : 'this streaming service';
-    toast(service + ' links cannot be played directly. Please use the Upload Music button to upload the song file from your device instead.');
+  if (!url) { toast('Paste a YouTube link or use the Upload button'); return; }
+  if (_isAppleMusic(url)) {
+    toast('Apple Music links cannot be embedded in web pages. Please open the Apple Music app to listen, or use the Upload button to play a file from your device.');
     return;
   }
-
+  if (_isStreamingOnly(url)) {
+    const svc = url.includes('spotify') ? 'Spotify' : url.includes('tidal') ? 'Tidal' : 'this service';
+    toast(svc + ' links cannot be played here. Paste a YouTube link instead, or use the Upload button.');
+    return;
+  }
+  const ytId = _getYouTubeId(url);
+  if (ytId) { window.loadYouTube(ytId, url); return; }
   window.playMusicFromUrl(url, url, false);
+};
+
+window.loadYouTube = (videoId, originalUrl) => {
+  const progRow = document.getElementById('audio-progress-row');
+  if (progRow) progRow.style.display = 'none';
+  const ytWrap = document.getElementById('yt-player-wrap');
+  const ytIframe = document.getElementById('yt-iframe');
+  if (!ytWrap || !ytIframe) { toast('YouTube player not available'); return; }
+  const audio = document.getElementById('music-audio');
+  if (audio) { audio.pause(); audio.src = ''; }
+  clearInterval(musicProgressTimer);
+  _musicIsPlaying = false; _musicMode = 'youtube';
+  ytIframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+  ytWrap.style.display = 'block';
+  const titleEl = document.getElementById('music-title');
+  if (titleEl) { titleEl.textContent = 'YouTube'; titleEl.title = originalUrl || ''; }
+  const disc = document.getElementById('music-disc');
+  if (disc) disc.style.animation = 'spin 3s linear infinite';
+  const player = document.getElementById('music-player');
+  if (player) player.style.display = 'block';
 };
 
 window.playMusicFromUrl = (url, label, isLocal) => {
   const audio = document.getElementById('music-audio');
   if (!audio) { toast('Audio element not found'); return; }
-
-  // Pause & reset
+  const ytWrap = document.getElementById('yt-player-wrap');
+  if (ytWrap) { ytWrap.style.display = 'none'; const f = document.getElementById('yt-iframe'); if(f) f.src=''; }
+  const progRow = document.getElementById('audio-progress-row');
+  if (progRow) progRow.style.display = 'flex';
   audio.pause();
   clearInterval(musicProgressTimer);
-  _musicIsPlaying = false;
+  _musicIsPlaying = false; _musicMode = 'audio';
   _resetPlayerUI();
-
-  // Handle crossOrigin
-  if (isLocal || (url && url.startsWith('blob:'))) {
-    audio.removeAttribute('crossorigin');
-  } else {
-    audio.crossOrigin = 'anonymous';
-  }
-
-  // Set volume
+  if (isLocal || (url && url.startsWith('blob:'))) { audio.removeAttribute('crossorigin'); }
+  else { audio.crossOrigin = 'anonymous'; }
   const volEl = document.getElementById('music-volume');
   audio.volume = Math.max(0, Math.min(1, (parseInt(volEl ? volEl.value : '80') || 80) / 100));
-
-  // Set src and load
   audio.src = url;
   audio.load();
-
-  // Update title
   const titleEl = document.getElementById('music-title');
   if (titleEl) {
     const lbl = typeof label === 'string' && label ? label : (isLocal ? 'Local file' : url);
-    titleEl.textContent = lbl.length > 40 ? lbl.substring(0, 38) + '...' : lbl;
+    titleEl.textContent = lbl.length > 35 ? lbl.substring(0, 33) + '...' : lbl;
     titleEl.title = lbl;
   }
-
-  // Show player
   const player = document.getElementById('music-player');
   if (player) player.style.display = 'block';
-
-  // Remove old listeners before adding new ones
-  const newAudio = audio;
-
-  const onCanPlay = () => {
-    newAudio.removeEventListener('error', onError);
-    const promise = newAudio.play();
+  const doPlay = () => {
+    const promise = audio.play();
     if (promise !== undefined) {
       promise.then(() => {
         _musicIsPlaying = true;
@@ -1131,38 +1224,25 @@ window.playMusicFromUrl = (url, label, isLocal) => {
         if (disc) disc.style.animation = 'spin 3s linear infinite';
         startMusicProgress();
       }).catch(err => {
-        console.error('Play failed:', err);
-        toast('Could not play audio. Try the Upload Music button to load a file from your device.');
-        _musicIsPlaying = false;
+        console.error('Play error:', err);
+        toast('Cannot play this file. Try MP3 format or upload from your device.');
       });
     }
   };
-
-  const onError = () => {
-    newAudio.removeEventListener('canplay', onCanPlay);
-    const errMap = { 1: 'Aborted', 2: 'Network error', 3: 'Decode error', 4: 'Format not supported' };
-    const code = newAudio.error ? newAudio.error.code : 0;
-    const msg = errMap[code] || 'Could not load audio';
-    if (isLocal) {
-      toast(msg + '. Try a different audio file (MP3 or OGG works best).');
-    } else {
-      toast('Cannot load this URL (' + msg + '). Only direct audio file links work (ending in .mp3, .ogg, etc). Use Upload Music for Spotify/Apple Music songs.');
-    }
-  };
-
-  newAudio.addEventListener('canplay', onCanPlay, { once: true });
-  newAudio.addEventListener('error', onError, { once: true });
+  audio.addEventListener('canplay', doPlay, { once: true });
+  audio.addEventListener('error', () => {
+    const errMap = { 1:'Aborted', 2:'Network error', 3:'Decode error', 4:'Format not supported' };
+    const code = audio.error ? audio.error.code : 0;
+    toast('Audio error: ' + (errMap[code] || 'Unknown') + '. ' + (isLocal ? 'Try MP3 or OGG.' : 'Use YouTube link or Upload button.'));
+  }, { once: true });
 };
 
 window.toggleMusicPlay = () => {
+  if (_musicMode === 'youtube') { toast('Use the YouTube player controls to play/pause.'); return; }
   const audio = document.getElementById('music-audio');
-  if (!audio || !audio.src || audio.src === window.location.href) {
-    toast('Use the Upload Music button to load a song first!');
-    return;
-  }
+  if (!audio || !audio.src || audio.src === window.location.href) { toast('Use the Upload button to load a song!'); return; }
   if (_musicIsPlaying) {
-    audio.pause();
-    _musicIsPlaying = false;
+    audio.pause(); _musicIsPlaying = false;
     clearInterval(musicProgressTimer);
     const btn = document.getElementById('music-play-btn');
     if (btn) btn.innerHTML = '&#9654;';
@@ -1176,9 +1256,7 @@ window.toggleMusicPlay = () => {
       const disc = document.getElementById('music-disc');
       if (disc) disc.style.animation = 'spin 3s linear infinite';
       startMusicProgress();
-    }).catch(err => {
-      toast('Playback failed. Please reload the track using Upload Music.');
-    });
+    }).catch(() => toast('Playback failed.'));
   }
 };
 
@@ -1222,12 +1300,11 @@ window.setMusicVolume = (val) => {
 
 window.playSongFromEntry = (url) => {
   if (!url) return;
-  if (_isStreamingUrl(url)) {
-    toast('This is a streaming link. Open it in your browser and download the song, then use Upload Music to play it here.');
-    window.toggleMusicPlayer();
-    return;
-  }
-  window.playMusicFromUrl(url, '🎵 ' + url, false);
+  const player = document.getElementById('music-player');
+  if (player) player.style.display = 'block';
+  const urlInput = document.getElementById('music-url-input');
+  if (urlInput) urlInput.value = url;
+  window.loadMusicUrl();
 };
 
 // ── PHOTO EDITOR ─────────────────────────────────────────────────────────────
