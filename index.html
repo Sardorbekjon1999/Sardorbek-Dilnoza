@@ -1012,7 +1012,8 @@ function _isStreamingUrl(url) {
 function _isDirectAudio(url) {
   try {
     const p = new URL(url).pathname.toLowerCase();
-    return /.(mp3|ogg|wav|aac|flac|m4a|opus|webm)(?.*)?$/.test(p);
+    const audioExts = new RegExp('[.](mp3|ogg|wav|aac|flac|m4a|opus|webm)');
+    return audioExts.test(p);
   } catch(e) { return false; }
 }
 
