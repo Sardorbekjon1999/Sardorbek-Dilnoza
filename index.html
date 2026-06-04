@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sardorbek & Dilnoza's Diary 💕</title>
+<title>Sardorbek & Dilnoza's Diary ð</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
 :root {
@@ -171,6 +171,10 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 .detail-photos img { width: 100%; border-radius: 10px; object-fit: cover; aspect-ratio: 1; cursor: pointer; transition: opacity 0.15s; }
 .detail-photos img:hover { opacity: 0.85; }
 .del-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid #e0a0a0; color: #c97d6e; background: transparent; font-size: 0.78rem; cursor: pointer; font-family: var(--sans); margin-top: 1rem; }
+.edit-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--blush); color: var(--rose); background: transparent; font-size: 0.78rem; cursor: pointer; font-family: var(--sans); margin-top: 1rem; margin-right: 6px; }
+.detail-song { margin: 12px 0; padding: 10px 14px; background: rgba(163,188,212,0.15); border-radius: 10px; font-size: 0.88rem; }
+.detail-song a { color: var(--rose); text-decoration: none; word-break: break-all; }
+.detail-song a:hover { text-decoration: underline; }
 .del-btn:hover { background: #fef0ee; }
 
 /* SETTINGS */
@@ -208,7 +212,7 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 
 @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
 
-/* ── CHAT ───────────────────────────────────────────────────────────────────── */
+/* ââ CHAT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .chat-wrap { display:flex; flex-direction:column; height:calc(100vh - 260px); min-height:400px; background:rgba(255,255,255,0.93); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
 .chat-messages { flex:1; overflow-y:auto; padding:1.25rem; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
 .chat-messages::-webkit-scrollbar { width:4px; }
@@ -247,16 +251,16 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 <!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-card">
-    <div class="auth-icon">💕</div>
+    <div class="auth-icon">ð</div>
     <h1>Sardorbek & Dilnoza's Diary</h1>
     <p>Who's writing today?</p>
     <div class="who-row">
-      <button class="who-btn" id="who-s" onclick="selectWho('Sardorbek')">🧔 Sardorbek</button>
-      <button class="who-btn" id="who-d" onclick="selectWho('Dilnoza')">👩 Dilnoza</button>
+      <button class="who-btn" id="who-s" onclick="selectWho('Sardorbek')">ð§ Sardorbek</button>
+      <button class="who-btn" id="who-d" onclick="selectWho('Dilnoza')">ð© Dilnoza</button>
     </div>
     <div class="auth-error" id="auth-error"></div>
-    <input class="auth-input" type="password" id="auth-pass" placeholder="• • • • • •" />
-    <button class="btn-primary" onclick="unlock()">Open diary 💕</button>
+    <input class="auth-input" type="password" id="auth-pass" placeholder="â¢ â¢ â¢ â¢ â¢ â¢" />
+    <button class="btn-primary" onclick="unlock()">Open diary ð</button>
     <p class="auth-hint">Enter your shared password</p>
   </div>
 </div>
@@ -266,27 +270,28 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="header-banner" id="header-banner" onclick="triggerCoverPick()">
     <img id="banner-img" src="" alt="Cover photo" />
     <div class="header-banner-overlay">
-      <span class="header-banner-title">💕 Sardorbek & Dilnoza's Diary</span>
+      <span class="header-banner-title">ð Sardorbek & Dilnoza's Diary</span>
     </div>
-    <button class="header-banner-change" onclick="event.stopPropagation();triggerCoverPick()">📷 Change</button>
+    <button class="header-banner-change" onclick="event.stopPropagation();triggerCoverPick()">ð· Change</button>
   </div>
 
   <div class="header">
     <div class="header-left">
-      <h1>💕 Sardorbek & Dilnoza</h1>
+      <h1>ð Sardorbek & Dilnoza</h1>
       <p id="header-date"></p>
     </div>
     <div class="header-right">
-      <div class="who-badge" id="who-badge">—</div>
-      <button class="lock-btn" onclick="lockDiary()" title="Lock diary">🔒</button>
+      <div class="who-badge" id="who-badge">â</div>
+      <button class="lock-btn" onclick="lockDiary()" title="Lock diary">ð</button>
     </div>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('write',this)">✏️ Write</button>
-    <button class="tab" onclick="switchTab('browse',this)">📖 Entries</button>
-    <button class="tab" onclick="switchTab('chat',this)" id="tab-chat">💬 Chat</button>
-    <button class="tab" onclick="switchTab('settings',this)">⚙️ Settings</button>
+    <button class="tab active" onclick="switchTab('write',this)">âï¸ Write</button>
+    <button class="tab" onclick="switchTab('browse',this)">ð Entries</button>
+    <button class="tab" onclick="switchTab('chat',this)" id="tab-chat">ð¬ Chat</button>
+    <button class="tab" onclick="switchTab('settings',this)">âï¸ Settings</button>
+    <button class="tab" onclick="toggleMusicPlayer()" id="tab-music">🎵 Music</button>
   </div>
 
   <!-- WRITE -->
@@ -295,12 +300,12 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
       <div style="margin-bottom:1rem">
         <label style="margin-bottom:6px;display:block">How are you feeling?</label>
         <div class="mood-row">
-          <button class="mood-pill" onclick="setMood(this,'😊','happy')">😊 Happy</button>
-          <button class="mood-pill" onclick="setMood(this,'🥰','in love')">🥰 In love</button>
-          <button class="mood-pill" onclick="setMood(this,'😌','peaceful')">😌 Peaceful</button>
-          <button class="mood-pill" onclick="setMood(this,'😄','excited')">😄 Excited</button>
-          <button class="mood-pill" onclick="setMood(this,'🥺','emotional')">🥺 Emotional</button>
-          <button class="mood-pill" onclick="setMood(this,'😔','melancholy')">😔 Melancholy</button>
+          <button class="mood-pill" onclick="setMood(this,'ð','happy')">ð Happy</button>
+          <button class="mood-pill" onclick="setMood(this,'ð¥°','in love')">ð¥° In love</button>
+          <button class="mood-pill" onclick="setMood(this,'ð','peaceful')">ð Peaceful</button>
+          <button class="mood-pill" onclick="setMood(this,'ð','excited')">ð Excited</button>
+          <button class="mood-pill" onclick="setMood(this,'ð¥º','emotional')">ð¥º Emotional</button>
+          <button class="mood-pill" onclick="setMood(this,'ð','melancholy')">ð Melancholy</button>
         </div>
       </div>
       <div class="field-row">
@@ -311,22 +316,22 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
         <label>Your entry</label>
         <textarea id="e-body" placeholder="Write about your day, a feeling, a memory you want to keep forever..."></textarea>
       </div>
-      <label>🎵 SONG OF THE DAY</label><input type="text" id="e-song" placeholder="What song describes this moment?" style="margin-bottom:10px" /><label>PHOTOS</label>
+      <label>ðµ SONG OF THE DAY</label><input type="text" id="e-song" placeholder="What song describes this moment?" style="margin-bottom:10px" /><label>PHOTOS</label>
       <div class="photo-zone" onclick="document.getElementById('photo-input').click()">
         <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)" />
-        <div class="photo-zone-text">📷 Tap to add photos</div>
+        <div class="photo-zone-text" id="photo-zone-text">ð· Tap to add photos</div>
       </div>
       <div class="photo-preview-grid" id="photo-preview"></div>
       <label style="margin-top:10px;display:block">Tags</label>
       <div class="tag-row">
-        <span class="tag-chip" onclick="toggleTag(this,'date night')">🌙 Date night</span>
-        <span class="tag-chip" onclick="toggleTag(this,'travel')">✈️ Travel</span>
-        <span class="tag-chip" onclick="toggleTag(this,'milestone')">🎉 Milestone</span>
-        <span class="tag-chip" onclick="toggleTag(this,'first time')">⭐ First time</span>
-        <span class="tag-chip" onclick="toggleTag(this,'everyday')">☀️ Everyday</span>
-        <span class="tag-chip" onclick="toggleTag(this,'memory')">📷 Memory</span>
+        <span class="tag-chip" onclick="toggleTag(this,'date night')">ð Date night</span>
+        <span class="tag-chip" onclick="toggleTag(this,'travel')">âï¸ Travel</span>
+        <span class="tag-chip" onclick="toggleTag(this,'milestone')">ð Milestone</span>
+        <span class="tag-chip" onclick="toggleTag(this,'first time')">â­ First time</span>
+        <span class="tag-chip" onclick="toggleTag(this,'everyday')">âï¸ Everyday</span>
+        <span class="tag-chip" onclick="toggleTag(this,'memory')">ð· Memory</span>
       </div>
-      <button class="save-btn" id="save-btn" onclick="saveEntry()">Save entry 💕</button>
+      <button class="save-btn" id="save-btn" onclick="saveEntry()">Save entry ð</button>
     </div>
   </div>
 
@@ -335,14 +340,14 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
     <div class="stats">
       <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Entries</div></div>
       <div class="stat"><div class="stat-num" id="s-streak">0</div><div class="stat-lbl">Day streak</div></div>
-      <div class="stat"><div class="stat-num" id="s-mood">—</div><div class="stat-lbl">Top mood</div></div>
+      <div class="stat"><div class="stat-num" id="s-mood">â</div><div class="stat-lbl">Top mood</div></div>
     </div>
     <div id="entry-list"></div>
   </div>
 
   <!-- DETAIL -->
   <div class="section" id="sec-detail">
-    <button class="detail-back" onclick="switchTab('browse',document.querySelector('.tab:nth-child(2)'))">← Back to entries</button>
+    <button class="detail-back" onclick="switchTab('browse',document.querySelector('.tab:nth-child(2)'))">â Back to entries</button>
     <div class="detail-card" id="detail-inner"></div>
   </div>
 
@@ -350,30 +355,30 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="section" id="sec-settings">
 
     <div class="settings-card">
-      <h3>🖼 Cover photo</h3>
+      <h3>ð¼ Cover photo</h3>
       <p class="settings-note">This photo appears as the full background, header banner and on the lock screen. Only you two will see it.</p>
       <div class="cover-preview" id="cover-preview" onclick="triggerCoverPick()">
         <img id="cover-preview-img" src="" alt="Cover" />
-        <span class="cover-preview-label" id="cover-preview-label">📷 Tap to choose a photo</span>
+        <span class="cover-preview-label" id="cover-preview-label">ð· Tap to choose a photo</span>
       </div>
       <input type="file" id="cover-input" accept="image/*" style="display:none" onchange="handleCoverPhoto(this)" />
       <div class="cover-actions">
-        <button class="cover-action-btn" onclick="triggerCoverPick()">📷 Choose photo</button>
-        <button class="cover-action-btn" onclick="removeCover()">✕ Remove</button>
+        <button class="cover-action-btn" onclick="triggerCoverPick()">ð· Choose photo</button>
+        <button class="cover-action-btn" onclick="removeCover()">â Remove</button>
       </div>
     </div>
 
 
     <div class="settings-card">
-      <h3>🖼️ ImgBB photo storage</h3>
-      <p class="settings-note">Photos are uploaded to ImgBB (free, unlimited). Get your free API key at <strong>imgbb.com</strong> → Account → API.</p>
+      <h3>ð¼ï¸ ImgBB photo storage</h3>
+      <p class="settings-note">Photos are uploaded to ImgBB (free, unlimited). Get your free API key at <strong>imgbb.com</strong> â Account â API.</p>
       <div class="setting-row"><label>ImgBB API Key</label><input type="text" id="cfg-imgbb" placeholder="Paste your ImgBB API key here" /></div>
       <button class="settings-save" onclick="saveImgbbKey()">Save key</button>
       <div id="imgbb-status" style="font-size:0.8rem;color:var(--muted);margin-top:6px;"></div>
     </div>
 
     <div class="settings-card">
-      <h3>🔑 Shared password</h3>
+      <h3>ð Shared password</h3>
       <p class="settings-note">Change the password you both use to open the diary. Make sure to tell your partner!</p>
       <div class="setting-row"><label>Current password</label><input type="password" id="pw-current" placeholder="Current password" /></div>
       <div class="setting-row"><label>New password</label><input type="password" id="pw-new" placeholder="New password" /></div>
@@ -388,24 +393,75 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
   <div class="section" id="sec-chat">
     <div class="chat-wrap">
       <div class="chat-messages" id="chat-messages">
-        <div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>
+        <div class="chat-empty"><span>ð¬</span>No messages yet.<br>Say something sweet ð</div>
       </div>
       <div class="chat-typing" id="chat-typing"></div>
       <div class="chat-input-row">
-        <button class="chat-photo-btn" onclick="document.getElementById('chat-photo-input').click()" title="Send photo">📷</button>
+        <button class="chat-photo-btn" onclick="document.getElementById('chat-photo-input').click()" title="Send photo">ð·</button>
         <input type="file" id="chat-photo-input" accept="image/*" style="display:none" onchange="sendChatPhoto(this)" />
         <textarea class="chat-input" id="chat-input" placeholder="Write a message..." rows="1"
           oninput="chatTyping();autoGrow(this)"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
-        <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+        <button class="chat-send-btn" onclick="sendMessage()">â¤</button>
       </div>
     </div>
   </div>
 
 
+
+<!-- EDIT ENTRY MODAL -->
+<div id="edit-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;overflow-y:auto;">
+  <div style="background:white;max-width:600px;margin:40px auto;padding:24px;border-radius:16px;">
+    <h3 style="font-family:var(--serif);margin-bottom:16px;">✏️ Edit Memory</h3>
+    <input type="hidden" id="edit-entry-id" />
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">Title</label>
+    <input type="text" id="edit-title" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--sans);" />
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">Memory</label>
+    <textarea id="edit-body" rows="6" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--serif);resize:vertical;"></textarea>
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">🎵 Song / Music Link</label>
+    <input type="text" id="edit-song" placeholder="Paste Spotify, YouTube, or any music link..." style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:var(--sans);" />
+    <label style="display:block;margin-bottom:6px;font-size:0.85rem;">📍 Location</label>
+    <input type="text" id="edit-location" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:16px;font-family:var(--sans);" />
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeEditModal()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--sans);">Cancel</button>
+      <button onclick="saveEditEntry()" style="padding:8px 18px;border-radius:8px;border:none;background:var(--rose);color:white;cursor:pointer;font-family:var(--sans);">Save Changes 💾</button>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div id="music-player" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;background:white;border-radius:16px;padding:12px 18px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:300px;max-width:420px;width:90%;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="font-size:1.2rem;">🎵</span>
+    <div style="flex:1;min-width:0;">
+      <div id="music-title" style="font-size:0.82rem;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Now Playing</div>
+      <div id="music-url-display" style="font-size:0.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+    </div>
+    <button onclick="closeMusicPlayer()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--muted);">✕</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <input type="range" id="music-progress" value="0" min="0" max="100" step="1" style="flex:1;accent-color:var(--rose);" oninput="seekMusic(this.value)" />
+    <span id="music-time" style="font-size:0.72rem;color:var(--muted);white-space:nowrap;">0:00</span>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button id="music-play-btn" onclick="toggleMusicPlay()" style="background:var(--rose);border:none;border-radius:50%;width:36px;height:36px;color:white;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">▶</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="font-size:0.75rem;color:var(--muted);">Vol</span>
+      <input type="range" id="music-volume" value="80" min="0" max="100" step="1" style="width:70px;accent-color:var(--rose);" oninput="setMusicVolume(this.value)" />
+    </div>
+  </div>
+  <div id="music-input-row" style="margin-top:10px;display:flex;gap:6px;">
+    <input type="text" id="music-url-input" placeholder="Paste a direct audio URL (mp3, ogg...)" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;font-family:var(--sans);" />
+    <button onclick="loadMusicUrl()" style="padding:6px 12px;background:var(--rose);color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.8rem;">Play</button>
+  </div>
+</div>
+<audio id="music-audio"></audio>
+
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button id="lightbox-close" onclick="closeLightbox()">â</button>
   <img id="lightbox-img" src="" alt="Photo" />
 </div>
 
@@ -413,7 +469,7 @@ textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.8; resize:
 // Firestore helper functions
 async function fsAddEntry(e){e.createdAt=new Date().toISOString();await addDoc(collection(db,'entries'),e);}async function fsDeleteEntry(id){await deleteDoc(doc(db,'entries',id));}async function fsSendMsg(m){m.timestamp=serverTimestamp();await addDoc(collection(db,'messages'),m);}async function fsUpdateMsgReactions(id,reacts){await updateDoc(doc(db,'messages',id),{reactions:reacts});}async function fsSetTyping(who,val){await setDoc(doc(db,'typing',who),{active:val,timestamp:serverTimestamp()},{merge:true});}async function fsGetSettings(){const d=await getDoc(doc(db,'settings','shared'));return d.exists()?d.data():{};}async function fsSetSetting(key,val){await setDoc(doc(db,'settings','shared'),{[key]:val},{merge:true});}
 
-// ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
+// âââ FIREBASE CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const firebaseConfig = {
   apiKey: "AIzaSyB72k3TX8hBQ5DUUdF5nzZNLYYNDjWniZE",
   authDomain: "our-diary-5c4d2.firebaseapp.com",
@@ -422,11 +478,11 @@ const firebaseConfig = {
   messagingSenderId: "951371710948",
   appId: "1:951371710948:web:ce73f8523d2ee4a23a07f1"
 };
-// ──────────────────────────────────────────────────────────────────────────────
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
-// ─── SET YOUR SHARED PASSWORD HERE (change before deploying!) ─────────────────
+// âââ SET YOUR SHARED PASSWORD HERE (change before deploying!) âââââââââââââââââ
 const DEFAULT_PASSWORD = 'Sardorbek&Dilnoza';
-// ──────────────────────────────────────────────────────────────────────────────
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const app=initializeApp(firebaseConfig);const db=getFirestore(app);
 // Firestore is initialized above
@@ -438,7 +494,7 @@ let selectedMoodEmoji = '';
 let selectedTags = [];
 let photoFiles = [];
 
-// ── COVER PHOTO ───────────────────────────────────────────────────────────────
+// ââ COVER PHOTO âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function applyCover(dataUrl) {
   if (!dataUrl) return;
   document.body.style.backgroundImage = `url('${dataUrl}')`;
@@ -448,7 +504,7 @@ function applyCover(dataUrl) {
   const prevImg = document.getElementById('cover-preview-img');
   prevImg.src = dataUrl; prevImg.classList.add('on');
   document.getElementById('cover-preview').classList.add('has-img');
-  document.getElementById('cover-preview-label').textContent = '📷 Change photo';
+  document.getElementById('cover-preview-label').textContent = 'ð· Change photo';
 }
 
 window.removeCover = () => {
@@ -459,7 +515,7 @@ window.removeCover = () => {
   document.getElementById('banner-img').src = '';
   document.getElementById('cover-preview').classList.remove('has-img');
   document.getElementById('cover-preview-img').classList.remove('on');
-  document.getElementById('cover-preview-label').textContent = '📷 Tap to choose a photo';
+  document.getElementById('cover-preview-label').textContent = 'ð· Tap to choose a photo';
   toast('Cover photo removed');
 };
 
@@ -477,7 +533,7 @@ window.handleCoverPhoto = async (input) => {
 };
 
 
-// ── AUTH (simple password) ────────────────────────────────────────────────────
+// ââ AUTH (simple password) ââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function getPassword(){const s=await fsGetSettings();return s.password||DEFAULT_PASSWORD;}
 
 window.selectWho = (who) => {
@@ -487,9 +543,9 @@ window.selectWho = (who) => {
 };
 
 window.unlock = async () => {
-  if (!currentWho) { showError('Please choose who you are 💕'); return; }
+  if (!currentWho) { showError('Please choose who you are ð'); return; }
   const pass = document.getElementById('auth-pass').value;
-  if (pass !== await getPassword()) { showError('Wrong password, try again 🔒'); return; }
+  if (pass !== await getPassword()) { showError('Wrong password, try again ð'); return; }
   sessionStorage.setItem('diary_who', currentWho);
   openApp();
 };
@@ -506,7 +562,7 @@ function openApp() {
   currentWho = who;
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('who-badge').textContent = who === 'Sardorbek' ? '🧔 Sardorbek' : '👩 Dilnoza';
+  document.getElementById('who-badge').textContent = who === 'Sardorbek' ? 'ð§ Sardorbek' : 'ð© Dilnoza';
   document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   loadSettings();
   loadEntries();
@@ -533,13 +589,13 @@ window.changePassword = async () => {
   document.getElementById('pw-current').value = '';
   document.getElementById('pw-new').value = '';
   document.getElementById('pw-confirm').value = '';
-  toast('Password updated! Tell your partner 💕');
+  toast('Password updated! Tell your partner ð');
 };
 
 // Auto-open if session still active
 if (sessionStorage.getItem('diary_who')) openApp();
 
-// ── TABS ──────────────────────────────────────────────────────────────────────
+// ââ TABS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 window.switchTab = (name, btn) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
@@ -548,7 +604,7 @@ window.switchTab = (name, btn) => {
   if (name === 'browse') renderEntries();
 };
 
-// ── WRITE ─────────────────────────────────────────────────────────────────────
+// ââ WRITE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 window.setMood = (btn, emoji, label) => {
   document.querySelectorAll('.mood-pill').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
@@ -568,10 +624,12 @@ window.handlePhotos = (input) => {
 function renderPreviews() {
   const grid = document.getElementById('photo-preview');
   grid.innerHTML = '';
+  const zoneText = document.getElementById('photo-zone-text');
+  if (zoneText) zoneText.textContent = photoFiles.length > 0 ? '📸 ' + photoFiles.length + ' photo' + (photoFiles.length > 1 ? 's' : '') + ' attached' : '📸 Tap to add photos';
   photoFiles.forEach((f,i) => {
     const div = document.createElement('div');
     div.className = 'photo-thumb';
-    div.innerHTML = `<img src="${URL.createObjectURL(f)}" /><button class="rm" onclick="removePhoto(${i})">✕</button>`;
+    div.innerHTML = `<img src="${URL.createObjectURL(f)}" /><button class="rm" onclick="removePhoto(${i})">â</button>`;
     grid.appendChild(div);
   });
 }
@@ -581,7 +639,7 @@ window.saveEntry = async () => {
   const title = document.getElementById('e-title').value.trim();
   const body = document.getElementById('e-body').value.trim();
   const loc = document.getElementById('e-loc').value.trim();
-  if (!body) { toast('Write something first 💕'); return; }
+  if (!body) { toast('Write something first ð'); return; }
   const btn = document.getElementById('save-btn');
   btn.disabled = true; btn.textContent = 'Saving...';
   showLoader(true);
@@ -606,15 +664,15 @@ window.saveEntry = async () => {
     document.getElementById('photo-preview').innerHTML='';
     document.getElementById('photo-input').value='';
     photoFiles=[]; selectedMood=''; selectedMoodEmoji=''; selectedTags=[];
-    toast('Entry saved! 💕');
+    toast('Entry saved! ð');
     switchTab('browse', document.querySelector('.tab:nth-child(2)'));
     await loadEntries();
   } catch(e) { toast('Error: '+e.message); }
-  btn.disabled=false; btn.textContent='Save entry 💕';
+  btn.disabled=false; btn.textContent='Save entry ð';
   showLoader(false);
 };
 
-// ── ENTRIES ───────────────────────────────────────────────────────────────────
+// ââ ENTRIES âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function loadEntries() {
   try {
     // localStorage
@@ -629,19 +687,19 @@ function renderEntries() {
   const moodCount={};
   entries.forEach(e=>{ if(e.moodEmoji) moodCount[e.moodEmoji]=(moodCount[e.moodEmoji]||0)+1; });
   const topMood = Object.entries(moodCount).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('s-mood').textContent = topMood ? topMood[0] : '—';
+  document.getElementById('s-mood').textContent = topMood ? topMood[0] : 'â';
   const dates=[...new Set(entries.map(e=>e.createdAt?.toDate?e.createdAt.toDate().toISOString().slice(0,10):''))];
   let streak=0, check=new Date().toISOString().slice(0,10);
   while(dates.includes(check)){streak++;const d=new Date(check);d.setDate(d.getDate()-1);check=d.toISOString().slice(0,10);}
   document.getElementById('s-streak').textContent=streak;
-  if(!entries.length){el.innerHTML='<div class="empty"><span>📖</span>No entries yet.<br>Write your first memory together.</div>';return;}
+  if(!entries.length){el.innerHTML='<div class="empty"><span>ð</span>No entries yet.<br>Write your first memory together.</div>';return;}
   el.innerHTML='<div class="entry-list">'+entries.map(e=>{
     const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
     const thumbs=(e.photos||[]).slice(0,3).map(u=>`<img src="${u}" alt="photo" />`).join('');
     const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
-    const authorIcon = e.author==='Sardorbek'?'🧔':'👩';
+    const authorIcon = e.author==='Sardorbek'?'ð§':'ð©';
     return `<div class="entry-card" onclick="openEntry('${e.id}')">
-      <div class="entry-top"><div><div class="entry-date">${date}${e.location?' · '+e.location:''}</div><span class="entry-author">${authorIcon} ${e.author||'?'}</span></div><div class="entry-mood">${e.moodEmoji||''}</div></div>
+      <div class="entry-top"><div><div class="entry-date">${date}${e.location?' Â· '+e.location:''}</div><span class="entry-author">${authorIcon} ${e.author||'?'}</span></div><div class="entry-mood">${e.moodEmoji||''}</div></div>
       <div class="entry-title">${e.title}</div>
       <div class="entry-preview">${e.body}</div>
       ${thumbs?`<div class="entry-thumb-strip">${thumbs}</div>`:''}
@@ -655,16 +713,17 @@ window.openEntry = (id) => {
   const date=e.createdAt?.toDate?e.createdAt.toDate().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'';
   const photos=(e.photos||[]).map(u=>`<img src="${u}" alt="photo" onclick="openLightbox('${u}')" />`).join('');
   const tags=(e.tags||[]).map(t=>`<span class="etag">${t}</span>`).join('');
-  const authorIcon=e.author==='Sardorbek'?'🧔':'👩';
+  const authorIcon=e.author==='Sardorbek'?'ð§':'ð©';
   document.getElementById('detail-inner').innerHTML=`
     <div class="detail-header">
       <div class="detail-title">${e.moodEmoji?e.moodEmoji+' ':''}${e.title}</div>
-      <div class="detail-meta">${date}${e.location?' · '+e.location:''} · ${authorIcon} ${e.author||'Unknown'}${e.mood?' · feeling '+e.mood:''}</div>
+      <div class="detail-meta">${date}${e.location?' Â· '+e.location:''} Â· ${authorIcon} ${e.author||'Unknown'}${e.mood?' Â· feeling '+e.mood:''}</div>
     </div>
     ${tags?`<div class="etags" style="margin-bottom:10px">${tags}</div>`:''}
     <div class="detail-body">${e.body}</div>
+    ${e.song ? `<div class="detail-song">🎵 <a href="${e.song}" target="_blank" rel="noopener">${e.song}</a> <button onclick="playSongFromEntry('${e.song}')" style="margin-left:8px;padding:3px 10px;background:var(--rose);color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;">▶ Play</button></div>` : ''}
     ${photos?`<div class="detail-photos">${photos}</div>`:''}
-    ${e.author===currentWho?`<button class="del-btn" onclick="deleteEntry('${e.id}')">🗑 Delete entry</button>`:''}`;
+    ${e.author===currentWho?`<button class="edit-btn" onclick="openEditEntry('${e.id}')">✏️ Edit</button> <button class="del-btn" onclick="deleteEntry('${e.id}')">ð Delete entry</button>`:''}`;
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-detail').classList.add('on');
@@ -677,13 +736,49 @@ window.deleteEntry = async (id) => {
   catch(e){toast('Error: '+e.message);}
   showLoader(false);
 };
+// ── EDIT ENTRY ────────────────────────────────────────────────────────────────
+window.openEditEntry = (id) => {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('edit-entry-id').value = id;
+  document.getElementById('edit-title').value = e.title || '';
+  document.getElementById('edit-body').value = e.body || '';
+  document.getElementById('edit-song').value = e.song || '';
+  document.getElementById('edit-location').value = e.location || '';
+  document.getElementById('edit-modal').style.display = 'block';
+};
 
-// ── SETTINGS ─────────────────────────────────────────────────────────────────
+window.closeEditModal = () => {
+  document.getElementById('edit-modal').style.display = 'none';
+};
+
+window.saveEditEntry = async () => {
+  const id = document.getElementById('edit-entry-id').value;
+  const title = document.getElementById('edit-title').value.trim();
+  const body = document.getElementById('edit-body').value.trim();
+  const song = document.getElementById('edit-song').value.trim();
+  const location = document.getElementById('edit-location').value.trim();
+  if (!body) { toast('Write something first!'); return; }
+  showLoader(true);
+  try {
+    await updateDoc(doc(db, 'entries', id), { title: title || 'Untitled', body, song, location });
+    entries = entries.map(e => e.id === id ? {...e, title: title||'Untitled', body, song, location} : e);
+    closeEditModal();
+    toast('Memory updated! 💕');
+    renderEntries();
+    openEntry(id);
+  } catch(e) { toast('Error: ' + e.message); }
+  showLoader(false);
+};
+
+
+
+// ââ SETTINGS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function loadSettings(){try{const s=await fsGetSettings();if(s.cover_photo)applyCover(s.cover_photo);const k=s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';document.getElementById('cfg-imgbb').value=k;if(k)document.getElementById('imgbb-status').textContent='\u2705 Key saved';}catch(e){}}
-window.saveSettings = () => { toast('Settings saved ✓'); };
+window.saveSettings = () => { toast('Settings saved â'); };
 
 
-// ── IMGBB PHOTO UPLOAD ────────────────────────────────────────────────────────
+// ââ IMGBB PHOTO UPLOAD ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function getImgbbKey(){try{const s=await fsGetSettings();return s.cfg_imgbb||'cd4d71a9640f191fb1b05c1deef0610c';}catch(e){return 'cd4d71a9640f191fb1b05c1deef0610c';}}
 
 window.saveImgbbKey = async () => {
@@ -696,7 +791,7 @@ window.saveImgbbKey = async () => {
 
 async function uploadToImgbb(file) {
   const key = await getImgbbKey();
-  if (!key) throw new Error('No ImgBB API key — add it in Settings');
+  if (!key) throw new Error('No ImgBB API key â add it in Settings');
   const form = new FormData();
   form.append('image', file);
   const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, { method:'POST', body:form });
@@ -711,21 +806,21 @@ setTimeout(async () => {
   if (el) {
     const k = await getImgbbKey();
     el.value = k;
-    if (k) document.getElementById('imgbb-status').textContent = '✅ Key saved';
+    if (k) document.getElementById('imgbb-status').textContent = 'â Key saved';
   }
 }, 400);
 
 
-// ── MESSAGES ──────────────────────────────────────────
+// ââ MESSAGES ââââââââââââââââââââââââââââââââââââââââââ
   async function loadMessages(){const snap=await new Promise(r=>onSnapshot(query(collection(db,'messages'),orderBy('timestamp')),r));const msgs=snap.docs.map(d=>({...d.data(),id:d.id}));renderChat(msgs);}
-  // ── CHAT ──
+  // ââ CHAT ââ
 let chatUnsub = null;
 let typingTimer = null;
-const REACTIONS = ['❤️','😂','😮','😢','👍'];
+const REACTIONS = ['â¤ï¸','ð','ð®','ð¢','ð'];
 
 function startChat() {
   if (chatUnsub) return;
-  const q = query(collection(db,'chat'), orderBy('createdAt','asc'));
+  const q = query(collection(db,'messages'), orderBy('timestamp'));
   chatUnsub = onSnapshot(q, snap => {
     renderChat(snap.docs.map(d=>({id:d.id,...d.data()})));
   });
@@ -740,13 +835,13 @@ function startChat() {
 function renderChat(msgs) {
   const box = document.getElementById('chat-messages');
   if (!msgs.length) {
-    box.innerHTML = '<div class="chat-empty"><span>💬</span>No messages yet.<br>Say something sweet 💕</div>';
+    box.innerHTML = '<div class="chat-empty"><span>ð¬</span>No messages yet.<br>Say something sweet ð</div>';
     return;
   }
   let lastDate = '';
   box.innerHTML = msgs.map(m => {
     const isMe = m.author === currentWho;
-    const ts = m.createdAt?.toDate ? m.createdAt.toDate() : new Date();
+    const ts = (m.timestamp?.toDate ? m.timestamp.toDate() : (m.createdAt?.toDate ? m.createdAt.toDate() : new Date()));
     const time = ts.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
     const dateStr = ts.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
     let divider = '';
@@ -759,7 +854,7 @@ function renderChat(msgs) {
     return `${divider}<div class="msg ${isMe?'me':'them'}">
       <div class="msg-bubble">${content}</div>
       ${reacts?`<div class="react-row">${reacts}</div>`:''}
-      <div class="msg-meta">${m.author} · ${time} <span style="margin-left:5px">${reactBtns}</span></div>
+      <div class="msg-meta">${m.author} Â· ${time} <span style="margin-left:5px">${reactBtns}</span></div>
     </div>`;
   }).join('');
   box.scrollTop = box.scrollHeight;
@@ -813,12 +908,102 @@ window.autoGrow = (el) => { el.style.height='auto'; el.style.height=Math.min(el.
 const _origSwitch = window.switchTab;
 window.switchTab = (name, btn) => { _origSwitch(name, btn); if(name==='chat') startChat(); };
 
-// ── LIGHTBOX ─────────────────────────────────────────────────────────────────
+// ââ LIGHTBOX âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 window.openLightbox=(url)=>{document.getElementById('lightbox-img').src=url;document.getElementById('lightbox').classList.add('open');};
 window.closeLightbox=()=>{document.getElementById('lightbox').classList.remove('open');};
 
 function showLoader(on){document.getElementById('loader').classList.toggle('on',on);}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+
+// ── MUSIC PLAYER ─────────────────────────────────────────────────────────────
+let musicProgressTimer = null;
+
+window.toggleMusicPlayer = () => {
+  const player = document.getElementById('music-player');
+  if (player.style.display === 'none') {
+    player.style.display = 'block';
+  } else {
+    player.style.display = 'none';
+  }
+};
+
+window.closeMusicPlayer = () => {
+  const audio = document.getElementById('music-audio');
+  audio.pause();
+  document.getElementById('music-player').style.display = 'none';
+  document.getElementById('music-play-btn').textContent = '▶';
+  clearInterval(musicProgressTimer);
+};
+
+window.loadMusicUrl = () => {
+  const url = document.getElementById('music-url-input').value.trim();
+  if (!url) { toast('Please enter a music URL'); return; }
+  playMusicFromUrl(url, url);
+};
+
+window.playMusicFromUrl = (url, label) => {
+  const audio = document.getElementById('music-audio');
+  audio.src = url;
+  audio.volume = (document.getElementById('music-volume').value || 80) / 100;
+  document.getElementById('music-title').textContent = label || 'Now Playing';
+  document.getElementById('music-url-display').textContent = url;
+  document.getElementById('music-url-input').value = url;
+  document.getElementById('music-player').style.display = 'block';
+  audio.play().then(() => {
+    document.getElementById('music-play-btn').textContent = '⏸';
+    startMusicProgress();
+  }).catch(e => {
+    toast('Cannot play this URL directly. Try a direct mp3/ogg link. 🎵');
+  });
+};
+
+window.toggleMusicPlay = () => {
+  const audio = document.getElementById('music-audio');
+  const btn = document.getElementById('music-play-btn');
+  if (audio.paused) {
+    audio.play().then(() => {
+      btn.textContent = '⏸';
+      startMusicProgress();
+    }).catch(e => toast('Playback error: ' + e.message));
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+    clearInterval(musicProgressTimer);
+  }
+};
+
+function startMusicProgress() {
+  clearInterval(musicProgressTimer);
+  musicProgressTimer = setInterval(() => {
+    const audio = document.getElementById('music-audio');
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('music-progress').value = pct;
+    const mins = Math.floor(audio.currentTime / 60);
+    const secs = Math.floor(audio.currentTime % 60).toString().padStart(2,'0');
+    document.getElementById('music-time').textContent = mins + ':' + secs;
+    if (audio.ended) {
+      document.getElementById('music-play-btn').textContent = '▶';
+      clearInterval(musicProgressTimer);
+    }
+  }, 1000);
+}
+
+window.seekMusic = (val) => {
+  const audio = document.getElementById('music-audio');
+  if (audio.duration) audio.currentTime = (val / 100) * audio.duration;
+};
+
+window.setMusicVolume = (val) => {
+  const audio = document.getElementById('music-audio');
+  audio.volume = val / 100;
+};
+
+// Play from song link in entry detail
+window.playSongFromEntry = (url) => {
+  playMusicFromUrl(url, '🎵 ' + url);
+};
+
 </script>
 
 </body>
